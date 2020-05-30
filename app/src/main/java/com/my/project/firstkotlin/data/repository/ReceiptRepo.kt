@@ -15,6 +15,10 @@ class ReceiptRepo (application: Application) {
         return receiptsDao?.getAllReceipts()
     }
 
+    suspend fun deleteAllReceipts () {
+        receiptsDao?.deleteAllReceipts()
+    }
+
     suspend fun insert(receipt: Receipt){
         receiptsDao?.insert(receipt)
     }

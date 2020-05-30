@@ -1,23 +1,24 @@
 package com.my.project.firstkotlin.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.data.room.model.Receipt
-import kotlinx.android.synthetic.main.item_receipt.view.*
+import com.my.project.firstkotlin.databinding.ItemReceiptBinding
 
-class RecipesAdapter () : RecyclerView.Adapter<RecipesAdapter.ReceiptViewHolder>() {
+class RecipesAdapter (private val clickListener : (Receipt) -> Unit) : RecyclerView.Adapter<RecipesAdapter.ReceiptViewHolder>() {
 
-    private var receiptList : List<Receipt>? = null
+    private var receiptList : List<Receipt> = emptyList()
 
-    class ReceiptViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val image : ImageView = itemView.img
-        val title : TextView = itemView.title
-        val description : TextView = itemView.description
+    class ReceiptViewHolder (private val binding: ItemReceiptBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind (receipt : Receipt, clickListener : (Receipt) -> Unit) {
+            binding.title.text = receipt.title
+            binding.description.text = receipt.description
+            binding.root.setOnClickListener {
+                clickListener(receipt)}
+        }
     }
 
     fun setReceiptsList (receiptList: List<Receipt>) {
@@ -26,20 +27,13 @@ class RecipesAdapter () : RecyclerView.Adapter<RecipesAdapter.ReceiptViewHolder>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceiptViewHolder {
-        val itemView : View = LayoutInflater.from(parent.context).inflate(R.layout.item_receipt, parent, false)
-        return ReceiptViewHolder(itemView)
+        val layoutInflater : LayoutInflater = LayoutInflater.from(parent.context)
+        val binding : ItemReceiptBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_receipt, parent, false)
+        return ReceiptViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ReceiptViewHolder, position: Int) {
-        val currentReceipt = receiptList?.get(position)
+    override fun onBindViewHolder(holder: ReceiptViewHolder, position: Int) = holder.bind(receiptList[position], clickListener)
 
-        holder.title.text = currentReceipt?.title
-        holder.description.text = currentReceipt?.description
-    }
-
-    override fun getItemCount() : Int {
-        return if (receiptList != null) {
-            receiptList!!.size
-        } else 0
-    }
+    override fun getItemCount() : Int = receiptList.size
 }

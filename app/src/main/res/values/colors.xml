@@ -3,4 +3,8 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="receipt_item_bg">#F1F1F1</color>
+    <color name="receipt_item_title">#2E7FC6</color>
+    <color name="receipt_item_text">#7E7E7E</color>
 </resources>

@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/basic_margin"
-    android:layout_marginEnd="@dimen/basic_margin"
-    android:layout_marginTop="@dimen/basic_margin"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:padding="@dimen/basic_padding"
+    <androidx.cardview.widget.CardView
+        android:backgroundTint="@color/receipt_item_bg"
+        app:cardCornerRadius="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/basic_margin"
+        android:layout_marginEnd="@dimen/basic_margin"
+        android:layout_marginTop="@dimen/basic_margin">
 
-        <ImageView
-            android:src="@android:drawable/ic_btn_speak_now"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="@dimen/basic_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img"
-            android:text="@string/app_name"
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <ImageView
+                android:src="@android:drawable/ic_btn_speak_now"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/img"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
 
-        <TextView
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintStart_toEndOf="@id/img"
-            android:text="@string/app_name"
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <com.my.project.firstkotlin.common.AppTextView
+                app:textType="bold"
+                android:textColor="@color/receipt_item_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/img"
+                android:text="@string/app_name"
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/app_name"
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <com.my.project.firstkotlin.common.AppTextView
+                android:textColor="@color/receipt_item_text"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintStart_toEndOf="@id/img"
+                android:text="@string/app_name"
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.my.project.firstkotlin.common.AppTextView
+                android:textColor="@color/receipt_item_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/app_name"
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-</androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
