@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "receipt_table")
-data class Receipt (
+@Entity(tableName = "recipes_table")
+data class Recipe (
 
     @PrimaryKey(autoGenerate = true)
     var id : Int? = 0,

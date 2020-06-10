@@ -4,14 +4,14 @@ import android.app.Application
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.my.project.firstkotlin.data.repository.ReceiptRepo
-import com.my.project.firstkotlin.data.room.model.Receipt
+import com.my.project.firstkotlin.data.repository.RecipeRepo
+import com.my.project.firstkotlin.data.room.model.Recipe
 
-class ReceiptListViewModel (application : Application) : ViewModel(), Observable {
+class RecipeListViewModel (application : Application) : ViewModel(), Observable {
 
-    private val receiptRepo : ReceiptRepo = ReceiptRepo(application)
+    private val recipeRepo : RecipeRepo = RecipeRepo(application)
 
-    fun getAllReceipts () : LiveData<List<Receipt>>? = receiptRepo.getAllReceipts()
+    fun getAllRecipes () : LiveData<List<Recipe>>? = recipeRepo.getAllRecipes()
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
 

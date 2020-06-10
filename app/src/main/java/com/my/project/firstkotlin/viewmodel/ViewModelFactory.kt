@@ -8,12 +8,12 @@ import java.lang.IllegalArgumentException
 class ViewModelFactory(private val application : Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
-        if (modelClass.isAssignableFrom(ReceiptListViewModel::class.java)){
-            return ReceiptListViewModel(application) as T
+        if (modelClass.isAssignableFrom(RecipeListViewModel::class.java)){
+            return RecipeListViewModel(application) as T
         }
 
-        if (modelClass.isAssignableFrom(NewReceiptViewModel::class.java)){
-            return NewReceiptViewModel(application) as T
+        if (modelClass.isAssignableFrom(NewRecipeViewModel::class.java)){
+            return NewRecipeViewModel(application) as T
         }
 
         throw IllegalArgumentException("Unknown view model class")
