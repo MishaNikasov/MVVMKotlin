@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.databinding.Observable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.my.project.firstkotlin.data.repository.RecipeRepo
-import com.my.project.firstkotlin.data.room.model.Recipe
+import com.my.project.firstkotlin.data.local.repository.RecipeRepo
+import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -14,12 +14,12 @@ class NewRecipeViewModel (application : Application) : ViewModel(), Observable {
     private val recipeRepo : RecipeRepo = RecipeRepo(application)
 
     fun saveRecipe() {
-        var recipe = Recipe(null, "fa", "23", 32, 412, .41)
+        val recipe = RecipeModel(null, "fa", "23", 32, 412, .41)
         insert(recipe)
     }
 
-    private fun insert (recipe: Recipe) : Job = viewModelScope.launch {
-        recipeRepo.insert(recipe)
+    private fun insert (recipeModel: RecipeModel) : Job = viewModelScope.launch {
+        recipeRepo.insert(recipeModel)
     }
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}

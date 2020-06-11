@@ -5,7 +5,7 @@ import androidx.databinding.DataBindingUtil
 import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.databinding.ActivityNewRecipeBinding
 import com.my.project.firstkotlin.ui.base.BaseActivity
-import com.my.project.firstkotlin.ui.fragment.RecipeListFragment
+import com.my.project.firstkotlin.ui.fragment.NewRecipeFragment
 
 class NewRecipeActivity : BaseActivity() {
 
@@ -14,7 +14,7 @@ class NewRecipeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_new_recipe)
-        setFragment(R.id.container, RecipeListFragment())
+        setFragment(R.id.container, NewRecipeFragment())
     }
 
 }

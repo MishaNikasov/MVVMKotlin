@@ -7,19 +7,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.my.project.firstkotlin.R
-import com.my.project.firstkotlin.data.room.model.Recipe
+import com.my.project.firstkotlin.data.remote.Resource
 import com.my.project.firstkotlin.databinding.FragmentRecipeListBinding
 import com.my.project.firstkotlin.ui.adapter.RecipesAdapter
 import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.viewmodel.RecipeListViewModel
 import com.my.project.firstkotlin.viewmodel.ViewModelFactory
 
-class RecipeListFragment : BaseFragment() {
+class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
 
     private lateinit var binding : FragmentRecipeListBinding
     private lateinit var recipeListViewModel : RecipeListViewModel
-
-    override fun layoutId() = R.layout.fragment_recipe_list
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,12 +31,22 @@ class RecipeListFragment : BaseFragment() {
         binding.recipeViewModel = recipeListViewModel
         binding.lifecycleOwner = this
 
+        initUi()
+    }
+
+    private fun initUi() {
+
         setUpList()
+
+        binding.searchBtn.setOnClickListener {
+            recipeListViewModel.getAllSearchRecipes(binding.searchText.text.toString())
+        }
+
     }
 
     private fun setUpList() {
 
-        val adapter = RecipesAdapter { selectedRecipe : Recipe -> onItemClick(selectedRecipe)}
+        val adapter = RecipesAdapter()
         val layoutManager = LinearLayoutManager(context)
 
         layoutManager.reverseLayout = true
@@ -48,14 +56,32 @@ class RecipeListFragment : BaseFragment() {
         binding.recipesRecycler.layoutManager = layoutManager
         binding.recipesRecycler.setHasFixedSize(true)
 
-        recipeListViewModel.getAllRecipes()?.observe(this, Observer {
-            adapter.setRecipesList(it)
+        recipeListViewModel.searchRecipesList.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    progressBarVisibility(false)
+                    it.data?.let {responseList ->
+                        adapter.setRecipesList(responseList)
+                    }
+                }
+
+                is Resource.Error -> {
+                    progressBarVisibility(false)
+                }
+
+                is Resource.Loading -> {
+                    progressBarVisibility(true)
+                }
+            }
         })
 
     }
 
-    private fun onItemClick(recipe : Recipe) {
-
+    private fun progressBarVisibility(isShow : Boolean) {
+        if (isShow)
+            binding.progressBar.visibility = View.VISIBLE
+        else
+            binding.progressBar.visibility = View.GONE
     }
 
 }

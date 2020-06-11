@@ -5,24 +5,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.my.project.firstkotlin.R
-import com.my.project.firstkotlin.data.room.model.Recipe
+import com.my.project.firstkotlin.data.remote.data.response.RecipeResult
 import com.my.project.firstkotlin.databinding.ItemRecipeBinding
 
-class RecipesAdapter (private val clickListener : (Recipe) -> Unit) : RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder>() {
+class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder>() {
 
-    private var recipeList : List<Recipe> = emptyList()
+    private var recipeModelList : List<RecipeResult> = emptyList()
 
     class RecipeViewHolder (private val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind (recipe : Recipe, clickListener : (Recipe) -> Unit) {
+        fun bind (recipe : RecipeResult) {
             binding.title.text = recipe.title
-            binding.description.text = recipe.description
-            binding.root.setOnClickListener {
-                clickListener(recipe)}
+            binding.description.text = recipe.sourceUrl
         }
     }
 
-    fun setRecipesList (recipeList: List<Recipe>) {
-        this.recipeList = recipeList
+    fun setRecipesList (recipeModelList: List<RecipeResult>) {
+        this.recipeModelList = recipeModelList
         notifyDataSetChanged()
     }
 
@@ -33,7 +31,7 @@ class RecipesAdapter (private val clickListener : (Recipe) -> Unit) : RecyclerVi
         return RecipeViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) = holder.bind(recipeList[position], clickListener)
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) = holder.bind(recipeModelList[position])
 
-    override fun getItemCount() : Int = recipeList.size
+    override fun getItemCount() : Int = recipeModelList.size
 }

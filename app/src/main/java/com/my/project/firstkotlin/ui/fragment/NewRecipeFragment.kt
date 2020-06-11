@@ -9,12 +9,10 @@ import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.viewmodel.NewRecipeViewModel
 import com.my.project.firstkotlin.viewmodel.ViewModelFactory
 
-class NewRecipeFragment : BaseFragment() {
+class NewRecipeFragment : BaseFragment(R.layout.fragment_new_recipe) {
 
     private lateinit var binding: FragmentNewRecipeBinding
     private lateinit var newRecipeViewModel: NewRecipeViewModel
-
-    override fun layoutId() = R.layout.fragment_new_recipe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
