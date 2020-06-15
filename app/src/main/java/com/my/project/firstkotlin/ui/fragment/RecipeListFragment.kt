@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.data.remote.Resource
 import com.my.project.firstkotlin.databinding.FragmentRecipeListBinding
-import com.my.project.firstkotlin.ui.adapter.HotRecipesAdapter
-import com.my.project.firstkotlin.ui.adapter.RecipesAdapter
+import com.my.project.firstkotlin.ui.adapter.HorizontalRecipesAdapter
+import com.my.project.firstkotlin.ui.adapter.VerticalRecipesAdapter
 import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.viewmodel.RecipeListViewModel
 import com.my.project.firstkotlin.viewmodel.ViewModelFactory
@@ -40,7 +40,7 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
 
     private fun initUi() {
 
-//        setUpSearchList()
+        setUpSearchList()
         setUpPopularList()
 
         binding.searchText.doAfterTextChanged {
@@ -53,7 +53,7 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
 
         recipeListViewModel.getPopularRecipes()
 
-        val adapter = HotRecipesAdapter()
+        val adapter = HorizontalRecipesAdapter()
 
         binding.recipesRecycler.adapter = adapter
         (binding.recipesRecycler.layoutManager as LinearLayoutManager).orientation = LinearLayoutManager.HORIZONTAL
@@ -64,7 +64,7 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
                 is Resource.Success -> {
                     progressBarVisibility(false)
                     it.data?.let {response ->
-                        adapter.setHotRecipesList(response.recipes.toList())
+                        adapter.setRecipesList(response.recipes.toList())
                     }
                 }
 
@@ -82,12 +82,12 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
 
     private fun setUpSearchList() {
 
-        val adapter = RecipesAdapter()
+        val adapter = VerticalRecipesAdapter()
 
         binding.recipesRecycler.adapter = adapter
         binding.recipesRecycler.addOnScrollListener(this@RecipeListFragment.scrollListener)
 
-        recipeListViewModel.recipesList.observe(viewLifecycleOwner, Observer {
+        recipeListViewModel.searchRecipesList.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     progressBarVisibility(false)
@@ -111,6 +111,7 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
     var isLoading = false
     var isScrolling = false
 
+    //TODO: сделать общий скроллер
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)

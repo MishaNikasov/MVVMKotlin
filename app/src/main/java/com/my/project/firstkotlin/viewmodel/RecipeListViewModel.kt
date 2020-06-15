@@ -1,6 +1,7 @@
 package com.my.project.firstkotlin.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.my.project.firstkotlin.data.remote.data.repository.SearchRecipeRepository
 import com.my.project.firstkotlin.data.local.repository.RecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
-import com.my.project.firstkotlin.data.remote.CommonRemote
 import com.my.project.firstkotlin.data.remote.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
 import kotlinx.coroutines.launch
@@ -17,22 +17,20 @@ import retrofit2.Response
 
 class RecipeListViewModel (application : Application) : ViewModel(), Observable {
 
-    companion object {
-        const val SEARCH = 0
-        const val POPULAR = 1
-    }
-
     //remote
-    val recipesList : MutableLiveData<Resource<RecipeResponse>> = MutableLiveData()
+    //search
+    val searchRecipesList : MutableLiveData<Resource<RecipeResponse>> = MutableLiveData()
+    private var searchRecipesResponse : RecipeResponse? = null
+    private var lastSearch : String? = null
+
+    //popular
     val popularRecipesList : MutableLiveData<Resource<RecipeResponse>> = MutableLiveData()
-    var recipesCount = CommonRemote.ITEMS_COUNT
-    var lastSearch : String? = null
-    var searchRecipesResponse : RecipeResponse? = null
+    private var popularRecipesResponse : RecipeResponse? = null
 
     //search
     fun searchRecipes (searchRecipes : String) = viewModelScope.launch {
 
-        recipesList.postValue(Resource.Loading())
+        searchRecipesList.postValue(Resource.Loading())
 
         when {
             lastSearch == null -> lastSearch = searchRecipes
@@ -44,18 +42,11 @@ class RecipeListViewModel (application : Application) : ViewModel(), Observable 
         val response =
 
         if (searchRecipesResponse != null)
-            SearchRecipeRepository.getRecipeResult(searchRecipes, recipesCount, searchRecipesResponse?.recipes!!.size)
+            SearchRecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size)
         else
-            SearchRecipeRepository.getRecipeResult(searchRecipes, recipesCount)
+            SearchRecipeRepository.getRecipeResult(searchRecipes)
 
-        recipesList.postValue(handleSearchRecipeResponse(response))
-    }
-
-    //popular
-    fun getPopularRecipes() =  viewModelScope.launch {
-
-
-
+        searchRecipesList.postValue(handleSearchRecipeResponse(response))
     }
 
     private fun handleSearchRecipeResponse(response: Response<RecipeResponse>) : Resource<RecipeResponse> {
@@ -74,6 +65,35 @@ class RecipeListViewModel (application : Application) : ViewModel(), Observable 
         return Resource.Error("Something wrong with search: " + response.message())
     }
 
+    //popular
+    fun getPopularRecipes() = viewModelScope.launch {
+
+        val response =
+            if (popularRecipesResponse != null) {
+                Log.d("LOF", "fllfdslfldsflas")
+                SearchRecipeRepository.getPopularRecipes(popularRecipesResponse?.recipes!!.size)
+            }
+            else
+                SearchRecipeRepository.getPopularRecipes()
+
+        popularRecipesList.postValue(handlePopularRecipeResponse(response))
+    }
+
+    private fun handlePopularRecipeResponse(response: Response<RecipeResponse>) : Resource<RecipeResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                if (popularRecipesResponse == null) {
+                    popularRecipesResponse = it
+                } else {
+                    val oldRecipes = popularRecipesResponse?.recipes
+                    val newRecipes = it.recipes
+                    oldRecipes?.addAll(newRecipes)
+                }
+                return Resource.Success(popularRecipesResponse ?: it)
+            }
+        }
+        return Resource.Error("Something wrong with popular: " + response.message())
+    }
     //local
     private val recipeRepo : RecipeRepo = RecipeRepo(application)
 

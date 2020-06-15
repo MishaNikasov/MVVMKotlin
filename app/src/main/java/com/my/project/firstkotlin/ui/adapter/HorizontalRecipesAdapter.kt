@@ -8,7 +8,7 @@ import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.databinding.ItemHorizontalRecipeBinding
 
-class HotRecipesAdapter : RecyclerView.Adapter<HotRecipesAdapter.RecipeViewHolder>() {
+class HorizontalRecipesAdapter : RecyclerView.Adapter<HorizontalRecipesAdapter.RecipeViewHolder>() {
 
     private var recipeModelList : List<Recipe> = emptyList()
 
@@ -18,7 +18,7 @@ class HotRecipesAdapter : RecyclerView.Adapter<HotRecipesAdapter.RecipeViewHolde
         }
     }
 
-    fun setHotRecipesList (recipeModelList: List<Recipe>) {
+    fun setRecipesList (recipeModelList: List<Recipe>) {
         this.recipeModelList = recipeModelList
         notifyDataSetChanged()
     }

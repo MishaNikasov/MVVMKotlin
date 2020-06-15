@@ -8,7 +8,7 @@ import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.databinding.ItemRecipeBinding
 
-class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder>() {
+class VerticalRecipesAdapter : RecyclerView.Adapter<VerticalRecipesAdapter.RecipeViewHolder>() {
 
     private var recipeModelList : List<Recipe> = emptyList()
 

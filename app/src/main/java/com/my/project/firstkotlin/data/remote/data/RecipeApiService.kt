@@ -15,8 +15,15 @@ interface RecipeApiService {
     @GET("recipes/search")
     suspend fun searchRecipes(
         @Query("query") receipt : String,
-        @Query("number") number : Int,
-        @Query("offset") offset : Int = 0
+        @Query("offset") offset : Int = 0,
+        @Query("number") number : Int = CommonRemote.ITEMS_COUNT
+    ) : Response<RecipeResponse>
+
+    @GET("recipes/search")
+    suspend fun popularRecipes(
+        @Query("offset") offset : Int = 0,
+        @Query("number") number : Int = CommonRemote.ITEMS_COUNT,
+        @Query("query") receipt : String = "Hot"
     ) : Response<RecipeResponse>
 
     companion object {
