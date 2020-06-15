@@ -15,66 +15,26 @@ import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class RecipeListViewModel (application : Application) : ViewModel(), Observable {
+class MainRecipesViewModel (application : Application) : ViewModel(), Observable {
 
     //remote
-    //search
-    val searchRecipesList : MutableLiveData<Resource<RecipeResponse>> = MutableLiveData()
-    private var searchRecipesResponse : RecipeResponse? = null
-    private var lastSearch : String? = null
-
     //popular
     val popularRecipesList : MutableLiveData<Resource<RecipeResponse>> = MutableLiveData()
     private var popularRecipesResponse : RecipeResponse? = null
 
-    //search
-    fun searchRecipes (searchRecipes : String) = viewModelScope.launch {
-
-        searchRecipesList.postValue(Resource.Loading())
-
-        when {
-            lastSearch == null -> lastSearch = searchRecipes
-            lastSearch != (searchRecipes) -> {
-                searchRecipesResponse = null
-            }
-        }
-
-        val response =
-
-        if (searchRecipesResponse != null)
-            SearchRecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size)
-        else
-            SearchRecipeRepository.getRecipeResult(searchRecipes)
-
-        searchRecipesList.postValue(handleSearchRecipeResponse(response))
-    }
-
-    private fun handleSearchRecipeResponse(response: Response<RecipeResponse>) : Resource<RecipeResponse> {
-        if (response.isSuccessful) {
-            response.body()?.let {
-                if (searchRecipesResponse == null) {
-                    searchRecipesResponse = it
-                } else {
-                    val oldRecipes = searchRecipesResponse?.recipes
-                    val newRecipes = it.recipes
-                    oldRecipes?.addAll(newRecipes)
-                }
-                return Resource.Success(searchRecipesResponse ?: it)
-            }
-        }
-        return Resource.Error("Something wrong with search: " + response.message())
-    }
-
     //popular
     fun getPopularRecipes() = viewModelScope.launch {
+        Log.d("LOF", "1")
 
         val response =
             if (popularRecipesResponse != null) {
-                Log.d("LOF", "fllfdslfldsflas")
+                Log.d("LOF", "2")
                 SearchRecipeRepository.getPopularRecipes(popularRecipesResponse?.recipes!!.size)
             }
-            else
+            else{
+                Log.d("LOF", "3")
                 SearchRecipeRepository.getPopularRecipes()
+            }
 
         popularRecipesList.postValue(handlePopularRecipeResponse(response))
     }

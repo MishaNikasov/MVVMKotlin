@@ -3,73 +3,87 @@ package com.my.project.firstkotlin.ui.fragment
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.my.project.firstkotlin.R
+import com.my.project.firstkotlin.data.remote.CommonRemote
 import com.my.project.firstkotlin.data.remote.Resource
-import com.my.project.firstkotlin.databinding.FragmentRecipeListBinding
-import com.my.project.firstkotlin.ui.adapter.HorizontalRecipesAdapter
+import com.my.project.firstkotlin.databinding.FragmentSearchRecipeBinding
 import com.my.project.firstkotlin.ui.adapter.VerticalRecipesAdapter
 import com.my.project.firstkotlin.ui.base.BaseFragment
-import com.my.project.firstkotlin.viewmodel.MainRecipesViewModel
+import com.my.project.firstkotlin.viewmodel.SearchRecipeViewModel
 import com.my.project.firstkotlin.viewmodel.ViewModelFactory
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
+class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe) {
 
-    private lateinit var binding : FragmentRecipeListBinding
-    private lateinit var recipeListViewModel : MainRecipesViewModel
+    private lateinit var binding: FragmentSearchRecipeBinding
+    private lateinit var searchRecipeViewModel: SearchRecipeViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentRecipeListBinding.bind(view)
+        binding = FragmentSearchRecipeBinding.bind(view)
 
         val factory = ViewModelFactory(requireActivity().application)
 
-        recipeListViewModel = ViewModelProvider(this, factory).get(MainRecipesViewModel::class.java)
-
+        searchRecipeViewModel = ViewModelProvider(this, factory).get(SearchRecipeViewModel::class.java)
+        binding.searchRecipeViewModel = searchRecipeViewModel
         binding.lifecycleOwner = this
-        binding.recipeViewModel = recipeListViewModel
 
         initUi()
     }
 
-    private fun initUi() {
-        setUpPopularList()
-        recipeListViewModel.getPopularRecipes()
+
+    private fun initUi () {
+
+        setUpSearchList()
+
+        var job : Job? = null
+        binding.searchText
+
+        binding.searchText.doAfterTextChanged {
+            job?.cancel()
+            job = MainScope().launch {
+                delay(CommonRemote.SEARCH_DELAY)
+                it?.let {
+                    if (it.toString().isNotEmpty()){
+                        searchRecipeViewModel.searchRecipes(it.toString())
+                    }
+                }
+            }
+        }
     }
 
-    //top popular recipes
-    private fun setUpPopularList() {
+    private fun setUpSearchList() {
 
-        val adapter = HorizontalRecipesAdapter()
+        val adapter = VerticalRecipesAdapter()
 
-        binding.popularRecipesRecycler.adapter = adapter
-        (binding.popularRecipesRecycler.layoutManager as LinearLayoutManager).orientation = LinearLayoutManager.HORIZONTAL
-        binding.popularRecipesRecycler.addOnScrollListener(this@RecipeListFragment.scrollListener)
+        binding.recipesRecycler.adapter = adapter
+        binding.recipesRecycler.addOnScrollListener(this@SearchRecipeFragment.scrollListener)
 
-        recipeListViewModel.popularRecipesList.observe(viewLifecycleOwner, Observer {
+        searchRecipeViewModel.searchRecipesList.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    progressBarVisibility(false)
                     it.data?.let {response ->
                         adapter.setRecipesList(response.recipes.toList())
                     }
                 }
 
                 is Resource.Error -> {
-                    progressBarVisibility(false)
                 }
 
                 is Resource.Loading -> {
-                    progressBarVisibility(true)
                 }
             }
         })
-
     }
 
     var isLoading = false
@@ -79,7 +93,7 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
-            val layoutManager = binding.popularRecipesRecycler.layoutManager as LinearLayoutManager
+            val layoutManager = binding.recipesRecycler.layoutManager as LinearLayoutManager
             val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
             val visibleItemCount = layoutManager.childCount
             val totalItemCount = layoutManager.itemCount
@@ -90,29 +104,15 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
             val shouldPaginate = isLastPosition && isNotAtBeginning && !isLoading && isScrolling
 
             if (shouldPaginate){
-                recipeListViewModel.getPopularRecipes()
+                searchRecipeViewModel.searchRecipes(binding.searchText.text.toString())
                 isScrolling = false
             }
         }
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
-
             if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
                 isScrolling = true
         }
     }
-
-    private fun progressBarVisibility(isShow : Boolean) {
-        if (isShow) {
-            isLoading = true
-//            binding.progressBar.visibility = View.VISIBLE
-        }
-        else {
-            isLoading = false
-//            binding.progressBar.visibility = View.GONE
-        }
-    }
-
 }
-
