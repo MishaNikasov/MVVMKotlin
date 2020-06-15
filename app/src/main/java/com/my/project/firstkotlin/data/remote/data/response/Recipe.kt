@@ -1,6 +1,6 @@
 package com.my.project.firstkotlin.data.remote.data.response
 
-data class RecipeResult(
+data class Recipe(
     val id: Int,
     val image: String,
     val openLicense: Int,

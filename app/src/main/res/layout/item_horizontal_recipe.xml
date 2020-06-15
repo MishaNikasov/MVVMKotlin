@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_margin="@dimen/basic_margin"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/image_block"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                app:riv_corner_radius="20dip"
+                android:src="@drawable/recipe_holder"
+                android:id="@+id/image"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:layout_marginBottom="@dimen/basic_margin"
+                android:layout_marginEnd="@dimen/basic_margin"
+                android:id="@+id/add_btn"
+                android:background="@drawable/add_recipe_btn_background"
+                android:layout_gravity="bottom|end"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/top_panel"
+            android:layout_marginTop="@dimen/basic_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.my.project.firstkotlin.common.AppTextView
+                android:textColor="@color/receipt_item_text"
+                android:id="@+id/time"
+                android:text="10MIN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.my.project.firstkotlin.common.AppTextView
+                android:textColor="@color/receipt_item_text"
+                android:text="  •  "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.my.project.firstkotlin.common.AppTextView
+                android:textColor="@color/receipt_item_text"
+                android:id="@+id/first_type"
+                android:text="VEGETARIAN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.my.project.firstkotlin.common.AppTextView
+                android:textColor="@color/receipt_item_text"
+                android:text="  •  "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.my.project.firstkotlin.common.AppTextView
+                android:textColor="@color/receipt_item_text"
+                android:id="@+id/second_type"
+                android:text="VEGAN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <com.my.project.firstkotlin.common.AppTextView
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_middle"
+            app:textType="bold"
+            android:layout_marginTop="@dimen/basic_margin"
+            app:layout_constraintTop_toBottomOf="@id/top_panel"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/title"
+            android:text="Vegan Meal Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

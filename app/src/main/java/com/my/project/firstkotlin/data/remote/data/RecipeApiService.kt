@@ -1,7 +1,7 @@
 package com.my.project.firstkotlin.data.remote.data
 
 import com.my.project.firstkotlin.data.remote.CommonRemote
-import com.my.project.firstkotlin.data.remote.data.response.SearchRecipeResult
+import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -13,7 +13,11 @@ import retrofit2.http.Query
 interface RecipeApiService {
 
     @GET("recipes/search")
-    suspend fun searchRecipes(@Query("query") receipt : String) : Response<SearchRecipeResult>
+    suspend fun searchRecipes(
+        @Query("query") receipt : String,
+        @Query("number") number : Int,
+        @Query("offset") offset : Int = 0
+    ) : Response<RecipeResponse>
 
     companion object {
         operator fun invoke() : RecipeApiService {

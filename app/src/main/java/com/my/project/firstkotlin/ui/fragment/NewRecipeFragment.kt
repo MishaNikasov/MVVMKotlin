@@ -19,7 +19,7 @@ class NewRecipeFragment : BaseFragment(R.layout.fragment_new_recipe) {
 
         binding = FragmentNewRecipeBinding.bind(view)
 
-        val factory = ViewModelFactory(activity!!.application)
+        val factory = ViewModelFactory(requireActivity().application)
 
         newRecipeViewModel = ViewModelProvider(this, factory).get(NewRecipeViewModel::class.java)
         binding.newRecipeViewModel = newRecipeViewModel

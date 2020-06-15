@@ -1,12 +1,12 @@
 package com.my.project.firstkotlin.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.databinding.ActivityMainBinding
 import com.my.project.firstkotlin.ui.base.BaseActivity
-import com.my.project.firstkotlin.ui.fragment.RecipeListFragment
 
 class MainActivity : BaseActivity() {
 
@@ -15,16 +15,13 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        setFragment(R.id.container, RecipeListFragment())
 
-        binding.fab.setOnClickListener {
-            openNewRecipe()
-        }
-    }
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
-    private fun openNewRecipe() {
-        val intent = Intent(this, NewRecipeActivity::class.java)
-        startActivity(intent)
+        val naController = findNavController(R.id.fragment_container)
+
+        binding.bottomNavigationView.setupWithNavController(naController)
     }
 
 }
