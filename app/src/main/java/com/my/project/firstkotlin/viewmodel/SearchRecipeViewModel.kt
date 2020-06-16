@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.my.project.firstkotlin.data.remote.data.repository.SearchRecipeRepository
 import com.my.project.firstkotlin.data.local.repository.RecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
-import com.my.project.firstkotlin.data.remote.Resource
+import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
 import kotlinx.coroutines.launch
 import retrofit2.Response

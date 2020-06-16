@@ -16,8 +16,8 @@
             android:layout_height="160dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                app:riv_corner_radius="20dip"
-                android:src="@drawable/recipe_holder"
+                app:elevation="10dp"
+                app:riv_corner_radius="@dimen/corner_radius"
                 android:id="@+id/image"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
@@ -56,18 +56,20 @@
 
             <com.my.project.firstkotlin.common.AppTextView
                 android:textColor="@color/receipt_item_text"
-                android:id="@+id/first_type"
+                android:id="@+id/servings"
                 android:text="VEGETARIAN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <com.my.project.firstkotlin.common.AppTextView
+                android:visibility="gone"
                 android:textColor="@color/receipt_item_text"
                 android:text="  •  "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <com.my.project.firstkotlin.common.AppTextView
+                android:visibility="gone"
                 android:textColor="@color/receipt_item_text"
                 android:id="@+id/second_type"
                 android:text="VEGAN"
@@ -78,7 +80,7 @@
 
         <com.my.project.firstkotlin.common.AppTextView
             android:textColor="@color/black"
-            android:textSize="@dimen/text_middle"
+            android:textSize="@dimen/text_average"
             app:textType="bold"
             android:layout_marginTop="@dimen/basic_margin"
             app:layout_constraintTop_toBottomOf="@id/top_panel"

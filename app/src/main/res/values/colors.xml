@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryLight">#629749</color>
-    <color name="colorPrimary">#33691e</color>
-    <color name="colorPrimaryDark">#003d00</color>
+    <color name="colorPrimaryLight">#000</color>
+    <color name="colorPrimary">#000</color>
+    <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#bf360c</color>
 
     <color name="black">#000</color>
     <color name="white">#fff</color>
+    <color name="light_gray">#EAEAEA</color>
 
     <color name="receipt_item_bg">#F1F1F1</color>
     <color name="receipt_item_title">#2E7FC6</color>

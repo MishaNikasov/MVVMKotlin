@@ -21,6 +21,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:layout_marginTop="@dimen/big_margin"
+                android:layout_marginStart="@dimen/big_margin"
+                android:layout_marginEnd="@dimen/big_margin"
+                android:background="@drawable/search_rounded_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginTop="@dimen/average_margin"
+                    android:layout_marginStart="@dimen/average_margin"
+                    android:layout_marginBottom="@dimen/average_margin"
+                    android:layout_marginEnd="@dimen/average_margin"
+                    android:src="@drawable/ic_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+                <EditText
+                    android:layout_marginEnd="@dimen/average_margin"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:hint="Search"
+                    android:textSize="@dimen/text_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
             <com.my.project.firstkotlin.common.AppTextView
                 app:textType="bold"
                 android:layout_marginStart="@dimen/big_margin"

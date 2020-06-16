@@ -27,6 +27,15 @@ class MainActivity : BaseActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    private fun setUpBottomNavigation() {
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.container, newRecipeFragment, "New Recipe").hide(newRecipeFragment)
+            add(R.id.container, searchRecipeFragment, "Search").hide(searchRecipeFragment)
+            add(R.id.container, recipeListFragment, "List")
+            commit()
+        }
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -47,15 +56,6 @@ class MainActivity : BaseActivity() {
                 }
                 else -> false
             }
-        }
-    }
-
-    private fun setUpBottomNavigation() {
-        supportFragmentManager.beginTransaction().apply {
-            add(R.id.container, newRecipeFragment, "New Recipe").hide(newRecipeFragment)
-            add(R.id.container, searchRecipeFragment, "Search").hide(searchRecipeFragment)
-            add(R.id.container, recipeListFragment, "List")
-            commit()
         }
     }
 }

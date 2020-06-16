@@ -40,31 +40,14 @@
 
         </LinearLayout>
 
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_height="0dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_recipe"
-                android:scrollbars="vertical"
-                android:id="@+id/recipes_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <ProgressBar
-                android:visibility="gone"
-                android:paddingBottom="@dimen/basic_margin"
-                app:layout_constraintTop_toTopOf="@id/recipes_recycler"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_gravity="bottom"
-                android:id="@+id/progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </FrameLayout>
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_vertical_recipe"
+            android:scrollbars="vertical"
+            android:id="@+id/recipes_recycler"/>
 
     </LinearLayout>
 

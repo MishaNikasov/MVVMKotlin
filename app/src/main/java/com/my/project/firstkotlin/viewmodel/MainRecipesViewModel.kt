@@ -1,7 +1,6 @@
 package com.my.project.firstkotlin.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.my.project.firstkotlin.data.remote.data.repository.SearchRecipeRepository
 import com.my.project.firstkotlin.data.local.repository.RecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
-import com.my.project.firstkotlin.data.remote.Resource
+import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -24,17 +23,14 @@ class MainRecipesViewModel (application : Application) : ViewModel(), Observable
 
     //popular
     fun getPopularRecipes() = viewModelScope.launch {
-        Log.d("LOF", "1")
+
+        popularRecipesList.postValue(Resource.Loading())
 
         val response =
-            if (popularRecipesResponse != null) {
-                Log.d("LOF", "2")
+            if (popularRecipesResponse != null)
                 SearchRecipeRepository.getPopularRecipes(popularRecipesResponse?.recipes!!.size)
-            }
-            else{
-                Log.d("LOF", "3")
+            else
                 SearchRecipeRepository.getPopularRecipes()
-            }
 
         popularRecipesList.postValue(handlePopularRecipeResponse(response))
     }

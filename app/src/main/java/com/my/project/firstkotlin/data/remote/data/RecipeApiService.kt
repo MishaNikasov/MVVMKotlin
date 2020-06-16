@@ -1,6 +1,6 @@
 package com.my.project.firstkotlin.data.remote.data
 
-import com.my.project.firstkotlin.data.remote.CommonRemote
+import com.my.project.firstkotlin.data.remote.util.CommonRemote
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -23,8 +23,15 @@ interface RecipeApiService {
     suspend fun popularRecipes(
         @Query("offset") offset : Int = 0,
         @Query("number") number : Int = CommonRemote.ITEMS_COUNT,
-        @Query("query") receipt : String = "Hot"
+        @Query("query") receipt : String = "Popular"
     ) : Response<RecipeResponse>
+
+    @GET("recipes/")
+    suspend fun getRecipeInfo(
+        @Query("id") id : Int,
+        @Query("includeNutrition") includeNutrition : Boolean = false
+    )
+//            : Response<>
 
     companion object {
         operator fun invoke() : RecipeApiService {

@@ -1,4 +1,4 @@
-package com.my.project.firstkotlin.data.remote
+package com.my.project.firstkotlin.data.remote.util
 
 object CommonRemote {
     const val API_KEY = "76f78cc159cd404e99fc8b20bac18d47"
