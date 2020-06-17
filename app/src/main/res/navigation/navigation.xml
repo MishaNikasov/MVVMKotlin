@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainRecipeFragment">
 
+    <fragment
+        android:id="@+id/mainRecipeFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.MainRecipeFragment"
+        android:label="fragment_main_recipes"
+        tools:layout="@layout/fragment_main_recipes" >
+        <action
+            android:id="@+id/action_mainRecipeFragment_to_recipeInfoFragment"
+            app:destination="@id/recipeInfoFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_down" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newRecipeFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.NewRecipeFragment"
+        android:label="fragment_new_recipe"
+        tools:layout="@layout/fragment_new_recipe" />
+
+    <fragment
+        android:id="@+id/searchRecipeFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.SearchRecipeFragment"
+        android:label="SearchRecipeFragment" />
+
+    <fragment
+        android:id="@+id/recipeInfoFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.RecipeInfoFragment"
+        android:label="RecipeInfoFragment" >
+        <argument
+            android:name="recipe_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>

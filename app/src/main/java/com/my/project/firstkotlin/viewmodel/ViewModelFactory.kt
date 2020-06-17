@@ -20,6 +20,10 @@ class ViewModelFactory(private val application : Application) : ViewModelProvide
             return SearchRecipeViewModel(application) as T
         }
 
+        if (modelClass.isAssignableFrom(RecipeInfoViewModel::class.java)){
+            return RecipeInfoViewModel(application) as T
+        }
+
         throw IllegalArgumentException("Unknown view model class")
     }
 }

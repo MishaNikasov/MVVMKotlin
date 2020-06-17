@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.my.project.firstkotlin.data.remote.data.repository.SearchRecipeRepository
+import com.my.project.firstkotlin.data.remote.data.repository.RecipeRepository
 import com.my.project.firstkotlin.data.local.repository.RecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.remote.util.Resource
@@ -35,9 +35,9 @@ class SearchRecipeViewModel (application : Application) : ViewModel(), Observabl
         val response =
 
         if (searchRecipesResponse != null)
-            SearchRecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size)
+            RecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size)
         else
-            SearchRecipeRepository.getRecipeResult(searchRecipes)
+            RecipeRepository.getRecipeResult(searchRecipes)
 
         searchRecipesList.postValue(handleSearchRecipeResponse(response))
     }

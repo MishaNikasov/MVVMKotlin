@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.my.project.firstkotlin.common.AppTextView
+            android:layout_marginBottom="@dimen/basic_margin"
+            android:text="@string/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ProgressBar
+            android:indeterminateTint="@color/black"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>

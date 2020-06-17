@@ -11,6 +11,8 @@
 
     <color name="receipt_item_bg">#F1F1F1</color>
     <color name="receipt_item_title">#2E7FC6</color>
+
     <color name="receipt_item_text">#7E7E7E</color>
+    <color name="text_gray">#5A5A5A</color>
 
 </resources>

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.my.project.firstkotlin.R
@@ -92,7 +93,8 @@ class MainRecipeFragment :
     }
 
     override fun onRecipeClick(recipe: Recipe) {
-        Log.d("YTY", recipe.id.toString())
+        val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(recipe.id)
+        Navigation.findNavController(binding.root).navigate(action)
     }
 
 }

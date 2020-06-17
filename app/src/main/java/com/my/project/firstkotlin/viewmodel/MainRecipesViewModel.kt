@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.my.project.firstkotlin.data.remote.data.repository.SearchRecipeRepository
+import com.my.project.firstkotlin.data.remote.data.repository.RecipeRepository
 import com.my.project.firstkotlin.data.local.repository.RecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.remote.util.Resource
@@ -28,9 +28,9 @@ class MainRecipesViewModel (application : Application) : ViewModel(), Observable
 
         val response =
             if (popularRecipesResponse != null)
-                SearchRecipeRepository.getPopularRecipes(popularRecipesResponse?.recipes!!.size)
+                RecipeRepository.getPopularRecipes(popularRecipesResponse?.recipes!!.size)
             else
-                SearchRecipeRepository.getPopularRecipes()
+                RecipeRepository.getPopularRecipes()
 
         popularRecipesList.postValue(handlePopularRecipeResponse(response))
     }
@@ -48,7 +48,7 @@ class MainRecipesViewModel (application : Application) : ViewModel(), Observable
                 return Resource.Success(popularRecipesResponse ?: it)
             }
         }
-        return Resource.Error("Something wrong with popular: " + response.message())
+        return Resource.Error("Something wrong with popular : $response.message()")
     }
 
     //local

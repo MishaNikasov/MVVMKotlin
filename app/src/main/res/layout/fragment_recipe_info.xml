@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="recipeInfoViewModel"
+            type="com.my.project.firstkotlin.viewmodel.RecipeInfoViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:fillViewport="true"
+        tools:context=".ui.fragment.RecipeInfoFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/recipe_info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    app:layout_constrainedHeight="true"
+                    app:layout_constraintHeight_percent=".45"
+                    android:id="@+id/image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/recipe_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
+                <LinearLayout
+                    android:id="@+id/title_block"
+                    android:elevation="@dimen/elevation"
+                    android:backgroundTint="@color/white"
+                    android:layout_marginStart="@dimen/biggest_margin"
+                    android:layout_marginEnd="@dimen/biggest_margin"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="@id/image"
+                    app:layout_constraintEnd_toEndOf="@id/image"
+                    app:layout_constraintTop_toBottomOf="@id/image"
+                    app:layout_constraintBottom_toBottomOf="@id/image"
+                    android:padding="@dimen/big_padding"
+                    android:background="@drawable/search_rounded_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.my.project.firstkotlin.common.AppTextView
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:textColor="@color/black"
+                        android:text="@string/recipe"
+                        app:textType="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.my.project.firstkotlin.common.AppTextView
+                        android:gravity="center"
+                        android:id="@+id/title"
+                        android:textSize="@dimen/text_title"
+                        android:textColor="@color/black"
+                        android:text="Title"
+                        app:textType="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+                <com.my.project.firstkotlin.common.AppTextView
+                    android:layout_margin="@dimen/big_margin"
+                    app:layout_constraintTop_toBottomOf="@id/title_block"
+                    android:gravity="start"
+                    android:textColorLink="@color/text_gray"
+                    android:id="@+id/description"
+                    android:textSize="@dimen/text_average"
+                    android:textColor="@color/text_gray"
+                    android:text="Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include
+                android:visibility="gone"
+                android:id="@+id/loading_screen"
+                layout="@layout/loading_screen"/>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</layout>

@@ -2,12 +2,14 @@ package com.my.project.firstkotlin.data.remote.data
 
 import com.my.project.firstkotlin.data.remote.util.CommonRemote
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
+import com.my.project.firstkotlin.data.remote.data.response.RecipeInfo
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RecipeApiService {
@@ -26,12 +28,11 @@ interface RecipeApiService {
         @Query("query") receipt : String = "Popular"
     ) : Response<RecipeResponse>
 
-    @GET("recipes/")
+    @GET("recipes/{id}/information")
     suspend fun getRecipeInfo(
-        @Query("id") id : Int,
+        @Path("id") id : Int,
         @Query("includeNutrition") includeNutrition : Boolean = false
-    )
-//            : Response<>
+    ) : Response<RecipeInfo>
 
     companion object {
         operator fun invoke() : RecipeApiService {
