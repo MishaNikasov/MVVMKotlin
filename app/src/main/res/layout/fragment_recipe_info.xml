@@ -25,14 +25,12 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    app:layout_constrainedHeight="true"
-                    app:layout_constraintHeight_percent=".45"
                     android:id="@+id/image"
                     app:layout_constraintTop_toTopOf="parent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/recipe_holder"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"/>
+                    android:layout_height="320dp"/>
 
                 <LinearLayout
                     android:id="@+id/title_block"
@@ -54,9 +52,8 @@
                     <com.my.project.firstkotlin.common.AppTextView
                         android:layout_marginBottom="@dimen/small_margin"
                         android:textSize="@dimen/text_normal"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_gray"
                         android:text="@string/recipe"
-                        app:textType="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -76,13 +73,43 @@
                     android:layout_margin="@dimen/big_margin"
                     app:layout_constraintTop_toBottomOf="@id/title_block"
                     android:gravity="start"
-                    android:textColorLink="@color/text_gray"
+                    android:textColorLink="@color/black"
                     android:id="@+id/description"
                     android:textSize="@dimen/text_average"
-                    android:textColor="@color/text_gray"
+                    android:textColor="@color/black"
                     android:text="Description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:padding="@dimen/big_padding"
+                    android:orientation="vertical"
+                    android:background="@drawable/time_to_ready_bg"
+                    android:layout_margin="@dimen/big_margin"
+                    app:layout_constraintTop_toBottomOf="@id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.my.project.firstkotlin.common.AppTextView
+                        android:id="@+id/total_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Title"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:textSize="@dimen/text_title"
+                        app:textType="bold" />
+
+                    <com.my.project.firstkotlin.common.AppTextView
+                        android:textSize="@dimen/text_normal"
+                        android:textColor="@color/text_gray"
+                        android:text="@string/total_cooking_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -68,9 +68,15 @@ class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
             .placeholder(R.drawable.recipe_holder)
             .into(binding.image)
 
+        val totalMin =  buildString{
+            append(recipeInfo.readyInMinutes)
+            append(" min")
+        }
+
         binding.title.text = recipeInfo.title
         binding.description.text = HtmlCompat.fromHtml(recipeInfo.summary, HtmlCompat.FROM_HTML_MODE_LEGACY)
-        Linkify.addLinks(binding.description, Linkify.WEB_URLS);
+        Linkify.addLinks(binding.description, Linkify.WEB_URLS)
+        binding.totalMin.text = totalMin
     }
 
 }

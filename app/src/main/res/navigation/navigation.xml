@@ -13,8 +13,7 @@
         <action
             android:id="@+id/action_mainRecipeFragment_to_recipeInfoFragment"
             app:destination="@id/recipeInfoFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/slide_out_down" />
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
 
     <fragment

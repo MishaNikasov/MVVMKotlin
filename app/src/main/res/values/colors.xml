@@ -8,6 +8,7 @@
     <color name="black">#000</color>
     <color name="white">#fff</color>
     <color name="light_gray">#EAEAEA</color>
+    <color name="dark_gray">#ACACAC</color>
 
     <color name="receipt_item_bg">#F1F1F1</color>
     <color name="receipt_item_title">#2E7FC6</color>
