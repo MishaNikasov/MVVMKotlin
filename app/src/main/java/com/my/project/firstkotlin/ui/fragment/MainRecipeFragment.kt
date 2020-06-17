@@ -1,32 +1,37 @@
 package com.my.project.firstkotlin.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.my.project.firstkotlin.R
+import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.data.remote.util.Resource
-import com.my.project.firstkotlin.databinding.FragmentRecipeListBinding
+import com.my.project.firstkotlin.databinding.FragmentMainRecipesBinding
 import com.my.project.firstkotlin.ui.adapter.RecipesAdapter
 import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.ui.util.Constant
 import com.my.project.firstkotlin.ui.util.LoadMoreScrollListener
+import com.my.project.firstkotlin.ui.util.RecipeNavigator
 import com.my.project.firstkotlin.viewmodel.MainRecipesViewModel
 import com.my.project.firstkotlin.viewmodel.ViewModelFactory
 
-class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
+class MainRecipeFragment :
+    BaseFragment(R.layout.fragment_main_recipes),
+    RecipeNavigator{
 
     //TODO: сделать координатор лейаут
 
-    private lateinit var binding : FragmentRecipeListBinding
+    private lateinit var binding : FragmentMainRecipesBinding
     private lateinit var recipeListViewModel : MainRecipesViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentRecipeListBinding.bind(view)
+        binding = FragmentMainRecipesBinding.bind(view)
 
         val factory = ViewModelFactory(requireActivity().application)
 
@@ -61,7 +66,7 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
         loadMoreListener = LoadMoreScrollListener(layoutManager, loadListener)
         binding.popularRecipesRecycler.addOnScrollListener(loadMoreListener)
 
-        val adapter = RecipesAdapter(Constant.ORIENTATION_HORIZONTAL)
+        val adapter = RecipesAdapter(Constant.ORIENTATION_HORIZONTAL, this)
         binding.popularRecipesRecycler.adapter = adapter
 
         recipeListViewModel.popularRecipesList.observe(viewLifecycleOwner, Observer {
@@ -84,7 +89,11 @@ class RecipeListFragment : BaseFragment(R.layout.fragment_recipe_list) {
                 }
             }
         })
-
     }
+
+    override fun onRecipeClick(recipe: Recipe) {
+        Log.d("YTY", recipe.id.toString())
+    }
+
 }
 

@@ -13,8 +13,10 @@ import com.my.project.firstkotlin.databinding.ItemHorizontalRecipeBinding
 import com.my.project.firstkotlin.databinding.ItemProgressBinding
 import com.my.project.firstkotlin.databinding.ItemVerticalRecipeBinding
 import com.my.project.firstkotlin.ui.util.Constant
+import com.my.project.firstkotlin.ui.util.RecipeNavigator
+import kotlinx.android.synthetic.main.item_progress.view.*
 
-class RecipesAdapter (private val orientation : Int) : RecyclerView.Adapter<RecipesAdapter.BaseViewHolder>() {
+class RecipesAdapter (private val orientation : Int, private val recipeNavigator: RecipeNavigator? = null) : RecyclerView.Adapter<RecipesAdapter.BaseViewHolder>() {
 
     private var recipeModelList : ArrayList<Recipe?> = arrayListOf()
 
@@ -24,7 +26,7 @@ class RecipesAdapter (private val orientation : Int) : RecyclerView.Adapter<Reci
     }
 
     class HorizontalRecipeViewHolder (private val context: Context, private val binding: ItemHorizontalRecipeBinding) : BaseViewHolder(binding) {
-        fun bind (recipe : Recipe) {
+        fun bind (recipe : Recipe, recipeNavigator: RecipeNavigator?) {
 
             val servingsTxt = "${recipe.servings} servings"
             val time = "${recipe.readyInMinutes} min"
@@ -42,6 +44,10 @@ class RecipesAdapter (private val orientation : Int) : RecyclerView.Adapter<Reci
                 .dontAnimate()
                 .placeholder(R.drawable.recipe_holder)
                 .into(binding.image)
+
+            binding.root.setOnClickListener {
+                recipeNavigator?.onRecipeClick(recipe)
+            }
         }
     }
 
@@ -106,7 +112,7 @@ class RecipesAdapter (private val orientation : Int) : RecyclerView.Adapter<Reci
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
             is HorizontalRecipeViewHolder -> recipeModelList[position]?.let {
-                holder.bind(it)
+                holder.bind(it, recipeNavigator)
             }
             is VerticalRecipeViewHolder -> recipeModelList[position]?.let {
                 holder.bind(it)

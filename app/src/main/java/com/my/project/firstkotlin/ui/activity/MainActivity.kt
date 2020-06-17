@@ -7,14 +7,14 @@ import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.databinding.ActivityMainBinding
 import com.my.project.firstkotlin.ui.base.BaseActivity
 import com.my.project.firstkotlin.ui.fragment.NewRecipeFragment
-import com.my.project.firstkotlin.ui.fragment.RecipeListFragment
+import com.my.project.firstkotlin.ui.fragment.MainRecipeFragment
 import com.my.project.firstkotlin.ui.fragment.SearchRecipeFragment
 
 class MainActivity : BaseActivity() {
 
     lateinit var binding : ActivityMainBinding
 
-    private val recipeListFragment = RecipeListFragment()
+    private val recipeListFragment = MainRecipeFragment()
     private val searchRecipeFragment = SearchRecipeFragment()
     private val newRecipeFragment = NewRecipeFragment()
     private var active : Fragment = recipeListFragment

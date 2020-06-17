@@ -50,6 +50,7 @@ class MainRecipesViewModel (application : Application) : ViewModel(), Observable
         }
         return Resource.Error("Something wrong with popular: " + response.message())
     }
+
     //local
     private val recipeRepo : RecipeRepo = RecipeRepo(application)
 
