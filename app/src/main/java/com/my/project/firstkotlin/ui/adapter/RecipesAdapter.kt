@@ -51,14 +51,14 @@ class RecipesAdapter (private val orientation : Int, private val recipeNavigator
         }
     }
 
-    class VerticalRecipeViewHolder (private val binding: ItemVerticalRecipeBinding) : BaseViewHolder(binding) {
+    inner class VerticalRecipeViewHolder (private val binding: ItemVerticalRecipeBinding) : BaseViewHolder(binding) {
         fun bind (recipe : Recipe) {
             binding.title.text = recipe.title
             binding.description.text = recipe.sourceUrl
         }
     }
 
-    class LoadingViewHolder (private val binding: ItemProgressBinding) : BaseViewHolder(binding) {
+    inner class LoadingViewHolder (private val binding: ItemProgressBinding) : BaseViewHolder(binding) {
         fun bind (orientation: Int) {
             val params = binding.root.layoutParams as ViewGroup.LayoutParams
             if (orientation == Constant.ORIENTATION_HORIZONTAL) {
@@ -92,18 +92,15 @@ class RecipesAdapter (private val orientation : Int, private val recipeNavigator
 
         return if (viewType == VIEW_TYPE_ITEM) {
             if (orientation == Constant.ORIENTATION_HORIZONTAL){
-                val binding : ItemHorizontalRecipeBinding =
-                    DataBindingUtil.inflate(layoutInflater, R.layout.item_horizontal_recipe, parent, false)
+                val binding : ItemHorizontalRecipeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_horizontal_recipe, parent, false)
                 HorizontalRecipeViewHolder(parent.context, binding)
             } else {
-                val binding : ItemVerticalRecipeBinding =
-                    DataBindingUtil.inflate(layoutInflater, R.layout.item_vertical_recipe, parent, false)
+                val binding : ItemVerticalRecipeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_vertical_recipe, parent, false)
                 VerticalRecipeViewHolder(binding)
             }
 
         } else {
-            val binding : ItemProgressBinding =
-                DataBindingUtil.inflate(layoutInflater, R.layout.item_progress, parent, false)
+            val binding : ItemProgressBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_progress, parent, false)
             LoadingViewHolder(binding)
         }
 

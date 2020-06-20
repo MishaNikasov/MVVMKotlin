@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        
+        <variable
+            name="stepItem"
+            type="com.my.project.firstkotlin.data.remote.data.response.Instruction.Step" />
+    </data>
+
+    <LinearLayout
+        android:layout_margin="@dimen/basic_margin"
+        android:orientation="horizontal"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.my.project.firstkotlin.common.AppTextView
+            app:string_convert="@{stepItem.number}"
+            android:layout_margin="@dimen/basic_margin"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_normal"
+            android:gravity="center"
+            android:background="@drawable/number_bg"
+            android:id="@+id/number"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+        <com.my.project.firstkotlin.common.AppTextView
+            android:text="@{stepItem.step}"
+            android:baselineAligned="false"
+            android:gravity="center|start"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_normal"
+            android:layout_marginStart="@dimen/big_margin"
+            android:id="@+id/step"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</layout>

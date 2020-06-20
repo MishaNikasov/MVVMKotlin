@@ -3,4 +3,11 @@
     <string name="recipe">Recipe</string>
     <string name="loading">Loading</string>
     <string name="total_cooking_time">Total cooking time</string>
+    <string name="string">%s</string>
+    <string name="min">min</string>
+    <string name="cost">$%s</string>
+    <string name="per_serving">per serving</string>
+    <string name="most_popular_recipes">Most popular recipes</string>
+    <string name="instruction"><u>Instruction</u></string>
+    <string name="ingredients"><u>Ingredients</u></string>
 </resources>

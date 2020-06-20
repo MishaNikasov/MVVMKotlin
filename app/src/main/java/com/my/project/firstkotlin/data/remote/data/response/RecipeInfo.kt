@@ -2,7 +2,7 @@ package com.my.project.firstkotlin.data.remote.data.response
 
 data class RecipeInfo(
     val aggregateLikes: Int,
-    val analyzedInstructions: List<Any>,
+    val analyzedInstructions: List<Instruction>,
     val cheap: Boolean,
     val creditsText: String,
     val cuisines: List<Any>,

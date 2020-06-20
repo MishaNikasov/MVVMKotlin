@@ -1,18 +1,18 @@
 package com.my.project.firstkotlin.ui.fragment
 
 import android.os.Bundle
-import android.text.util.Linkify
 import android.view.View
-import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 
 import com.my.project.firstkotlin.R
-import com.my.project.firstkotlin.data.remote.data.response.RecipeInfo
+import com.my.project.firstkotlin.data.remote.data.response.Ingredient
+import com.my.project.firstkotlin.data.remote.data.response.Instruction
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.databinding.FragmentRecipeInfoBinding
+import com.my.project.firstkotlin.ui.adapter.IngredientsAdapter
+import com.my.project.firstkotlin.ui.adapter.InstructionAdapter
 import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.viewmodel.RecipeInfoViewModel
 import com.my.project.firstkotlin.viewmodel.ViewModelFactory
@@ -43,7 +43,9 @@ class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
                 is Resource.Success -> {
                     binding.loadingScreen.visibility = View.GONE
                     it.data?.let {response ->
-                        initUi(response)
+                        binding.recipeInfo = response
+                        setUpIngredientsList(response.extendedIngredients)
+                        setUpInstructionList(response.analyzedInstructions[0].steps)
                     }
                 }
 
@@ -58,25 +60,14 @@ class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
         })
     }
 
-    private fun initUi(recipeInfo: RecipeInfo) {
-
-        Glide
-            .with(requireContext())
-            .load(recipeInfo.image)
-            .centerCrop()
-            .dontAnimate()
-            .placeholder(R.drawable.recipe_holder)
-            .into(binding.image)
-
-        val totalMin =  buildString{
-            append(recipeInfo.readyInMinutes)
-            append(" min")
-        }
-
-        binding.title.text = recipeInfo.title
-        binding.description.text = HtmlCompat.fromHtml(recipeInfo.summary, HtmlCompat.FROM_HTML_MODE_LEGACY)
-        Linkify.addLinks(binding.description, Linkify.WEB_URLS)
-        binding.totalMin.text = totalMin
+    private fun setUpIngredientsList(ingredients : List<Ingredient>) {
+        val adapter = IngredientsAdapter()
+        adapter.differ.submitList(ingredients)
+        binding.ingredientsRecycler.adapter = adapter
     }
 
+    private fun setUpInstructionList(steps : List<Instruction.Step>) {
+        val adapter = InstructionAdapter(steps)
+        binding.instructionRecycler.adapter = adapter
+    }
 }

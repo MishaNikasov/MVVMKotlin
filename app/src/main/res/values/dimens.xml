@@ -13,6 +13,7 @@
     <dimen name="corner_radius">15dp</dimen>
     <dimen name="elevation">2dp</dimen>
 
+    <dimen name="text_small">12sp</dimen>
     <dimen name="text_normal">14sp</dimen>
     <dimen name="text_average">16sp</dimen>
     <dimen name="text_title">23sp</dimen>

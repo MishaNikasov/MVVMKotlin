@@ -7,6 +7,9 @@
         <variable
             name="recipeInfoViewModel"
             type="com.my.project.firstkotlin.viewmodel.RecipeInfoViewModel" />
+        <variable
+            name="recipeInfo"
+            type="com.my.project.firstkotlin.data.remote.data.response.RecipeInfo" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -16,6 +19,7 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -25,6 +29,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    app:load_image="@{recipeInfo.image}"
                     android:id="@+id/image"
                     app:layout_constraintTop_toTopOf="parent"
                     android:scaleType="centerCrop"
@@ -62,14 +67,14 @@
                         android:id="@+id/title"
                         android:textSize="@dimen/text_title"
                         android:textColor="@color/black"
-                        android:text="Title"
+                        android:text="@{recipeInfo.title}"
                         app:textType="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 
-
                 <com.my.project.firstkotlin.common.AppTextView
+                    app:html_text="@{recipeInfo.summary}"
                     android:layout_margin="@dimen/big_margin"
                     app:layout_constraintTop_toBottomOf="@id/title_block"
                     android:gravity="start"
@@ -77,40 +82,142 @@
                     android:id="@+id/description"
                     android:textSize="@dimen/text_average"
                     android:textColor="@color/black"
-                    android:text="Description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <LinearLayout
+                    android:id="@+id/info_block"
                     android:gravity="center"
                     android:padding="@dimen/big_padding"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:background="@drawable/time_to_ready_bg"
                     android:layout_margin="@dimen/big_margin"
                     app:layout_constraintTop_toBottomOf="@id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.my.project.firstkotlin.common.AppTextView
-                        android:id="@+id/total_min"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
                         android:gravity="center"
-                        android:text="Title"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="@dimen/small_margin"
-                        android:textSize="@dimen/text_title"
-                        app:textType="bold" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
 
-                    <com.my.project.firstkotlin.common.AppTextView
-                        android:textSize="@dimen/text_normal"
-                        android:textColor="@color/text_gray"
-                        android:text="@string/total_cooking_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_timer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <com.my.project.firstkotlin.common.AppTextView
+                            android:layout_gravity="center"
+                            tools:text="20"
+                            android:id="@+id/total_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            app:string_convert="@{recipeInfo.readyInMinutes}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_title"
+                            app:textType="bold" />
+
+                        <com.my.project.firstkotlin.common.AppTextView
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/min"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_normal"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <com.my.project.firstkotlin.common.AppTextView
+                            tools:text="$1.5"
+                            android:layout_gravity="center"
+                            app:double_convert="@{recipeInfo.pricePerServing/100}"
+                            app:textType="bold"
+                            android:textSize="@dimen/text_title"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <com.my.project.firstkotlin.common.AppTextView
+                            android:layout_gravity="center"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_normal"
+                            android:text="@string/per_serving"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 
+                <com.my.project.firstkotlin.common.AppTextView
+                    android:id="@+id/ingredients_txt"
+                    app:textType="bold"
+                    app:layout_constraintTop_toBottomOf="@id/info_block"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_margin="@dimen/big_margin"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_title"
+                    android:text="@string/ingredients"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:overScrollMode="never"
+                    tools:listitem="@layout/item_ingredient"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/ingredients_txt"
+                    android:id="@+id/ingredients_recycler"
+                    android:layout_margin="@dimen/big_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:background="@color/light_gray_bg"
+                    android:layout_marginTop="@dimen/big_margin"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/ingredients_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.my.project.firstkotlin.common.AppTextView
+                        android:layout_marginTop="@dimen/big_margin"
+                        android:id="@+id/instruction_txt"
+                        app:textType="bold"
+                        android:layout_marginStart="@dimen/big_margin"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_title"
+                        android:text="@string/instruction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:overScrollMode="never"
+                        tools:listitem="@layout/item_instruction"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/instruction_txt"
+                        android:id="@+id/instruction_recycler"
+                        android:layout_margin="@dimen/big_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

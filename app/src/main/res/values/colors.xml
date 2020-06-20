@@ -7,6 +7,7 @@
 
     <color name="black">#000</color>
     <color name="white">#fff</color>
+    <color name="light_gray_bg">#F3F3F3</color>
     <color name="light_gray">#EAEAEA</color>
     <color name="dark_gray">#ACACAC</color>
 
