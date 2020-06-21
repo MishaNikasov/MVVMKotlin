@@ -1,17 +1,17 @@
 package com.my.project.firstkotlin.ui.activity
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.databinding.ActivityMainBinding
-import com.my.project.firstkotlin.ui.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class MainActivity : BaseActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
 

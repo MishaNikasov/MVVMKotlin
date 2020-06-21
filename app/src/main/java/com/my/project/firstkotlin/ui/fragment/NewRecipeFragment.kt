@@ -7,8 +7,9 @@ import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.databinding.FragmentNewRecipeBinding
 import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.viewmodel.NewRecipeViewModel
-import com.my.project.firstkotlin.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewRecipeFragment : BaseFragment(R.layout.fragment_new_recipe) {
 
     private lateinit var binding: FragmentNewRecipeBinding
@@ -19,9 +20,6 @@ class NewRecipeFragment : BaseFragment(R.layout.fragment_new_recipe) {
 
         binding = FragmentNewRecipeBinding.bind(view)
 
-        val factory = ViewModelFactory(requireActivity().application)
-
-        newRecipeViewModel = ViewModelProvider(this, factory).get(NewRecipeViewModel::class.java)
         binding.newRecipeViewModel = newRecipeViewModel
         binding.lifecycleOwner = this
     }

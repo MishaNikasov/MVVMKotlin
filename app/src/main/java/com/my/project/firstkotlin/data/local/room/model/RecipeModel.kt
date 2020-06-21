@@ -7,13 +7,15 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "recipes_table")
 data class RecipeModel (
 
-    @PrimaryKey(autoGenerate = true)
-    var id : Int? = 0,
+    var remoteId : Int,
     var title : String,
-    var description : String,
+    var servings : Int,
     @ColumnInfo(name = "main_image")
-    var mainImage : Int,
-    var images : Int,
-    var price : Double
+    var mainImage : String,
+    var timeToReady : Int,
+    var sourceUrl: String
 
-)
+){
+    @PrimaryKey(autoGenerate = true)
+    var id : Int? = null
+}

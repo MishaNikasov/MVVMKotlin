@@ -11,16 +11,11 @@ import kotlinx.coroutines.launch
 
 class NewRecipeViewModel (application : Application) : ViewModel(), Observable {
 
-    private val recipeRepo : RecipeRepo = RecipeRepo(application)
+//    private val recipeRepo : RecipeRepo = RecipeRepo(application)
 
-    fun saveRecipe() {
-        val recipe = RecipeModel(null, "fa", "23", 32, 412, .41)
-        insert(recipe)
-    }
-
-    private fun insert (recipeModel: RecipeModel) : Job = viewModelScope.launch {
-        recipeRepo.insert(recipeModel)
-    }
+//    private fun insert (recipeModel: RecipeModel) : Job = viewModelScope.launch {
+//        recipeRepo.insert(recipeModel)
+//    }
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
 

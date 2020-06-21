@@ -1,20 +1,25 @@
 package com.my.project.firstkotlin.viewmodel
 
-import android.app.Application
 import androidx.databinding.Observable
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.my.project.firstkotlin.data.TypeConverter
 import com.my.project.firstkotlin.data.remote.data.repository.RecipeRepository
 import com.my.project.firstkotlin.data.local.repository.RecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
+import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MainRecipesViewModel (application : Application) : ViewModel(), Observable {
+class MainRecipesViewModel @ViewModelInject constructor (
+    private val recipeRepo : RecipeRepo
+) : ViewModel(), Observable {
 
     //remote
     //popular
@@ -52,7 +57,12 @@ class MainRecipesViewModel (application : Application) : ViewModel(), Observable
     }
 
     //local
-    private val recipeRepo : RecipeRepo = RecipeRepo(application)
+
+    fun addRecipeToDB(recipe: Recipe) {
+        viewModelScope.launch {
+            recipeRepo.insert(TypeConverter.remoteToLocalRecipe(recipe))
+        }
+    }
 
     fun getAllRecipes () : LiveData<List<RecipeModel>>? = recipeRepo.getAllRecipes()
 

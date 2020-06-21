@@ -2,6 +2,7 @@ package com.my.project.firstkotlin.viewmodel
 
 import android.app.Application
 import androidx.databinding.Observable
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,10 +12,13 @@ import com.my.project.firstkotlin.data.local.repository.RecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class SearchRecipeViewModel (application : Application) : ViewModel(), Observable {
+class SearchRecipeViewModel @ViewModelInject constructor (
+    private val recipeRepo : RecipeRepo
+) : ViewModel(), Observable {
 
     //remote
     val searchRecipesList : MutableLiveData<Resource<RecipeResponse>> = MutableLiveData()
@@ -60,7 +64,6 @@ class SearchRecipeViewModel (application : Application) : ViewModel(), Observabl
 
 
     //local
-    private val recipeRepo : RecipeRepo = RecipeRepo(application)
 
     fun getAllRecipes () : LiveData<List<RecipeModel>>? = recipeRepo.getAllRecipes()
 

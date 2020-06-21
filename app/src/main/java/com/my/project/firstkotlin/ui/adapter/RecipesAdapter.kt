@@ -35,6 +35,10 @@ class RecipesAdapter (private val orientation : Int, private val recipeNavigator
             binding.servings.text = servingsTxt
             binding.time.text = time
 
+            binding.addBtn.setOnClickListener {
+                recipeNavigator?.onRecipeAdd(recipe)
+            }
+
             val url = "https://spoonacular.com/recipeImages/${recipe.image}"
 
             Glide

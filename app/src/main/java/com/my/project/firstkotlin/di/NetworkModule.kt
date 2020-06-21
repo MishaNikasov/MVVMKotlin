@@ -1,9 +1,12 @@
 package com.my.project.firstkotlin.di
 
 import com.my.project.firstkotlin.data.remote.data.RecipeApiService
+import com.my.project.firstkotlin.data.remote.data.repository.RecipeRepository
 import com.my.project.firstkotlin.data.remote.util.CommonRemote
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,7 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class NetworkModule {
+@InstallIn(ApplicationComponent::class)
+object NetworkModule {
 
     @Provides
     @Singleton

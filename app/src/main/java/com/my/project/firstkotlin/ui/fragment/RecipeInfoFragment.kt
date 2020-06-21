@@ -2,6 +2,7 @@ package com.my.project.firstkotlin.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -15,12 +16,13 @@ import com.my.project.firstkotlin.ui.adapter.IngredientsAdapter
 import com.my.project.firstkotlin.ui.adapter.InstructionAdapter
 import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.viewmodel.RecipeInfoViewModel
-import com.my.project.firstkotlin.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
 
     private lateinit var binding : FragmentRecipeInfoBinding
-    private lateinit var recipeInfoViewModel: RecipeInfoViewModel
+    private val recipeInfoViewModel: RecipeInfoViewModel by viewModels()
 
     private val args : RecipeInfoFragmentArgs by navArgs()
 
@@ -28,10 +30,6 @@ class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentRecipeInfoBinding.bind(view)
-
-        val factory = ViewModelFactory(requireActivity().application)
-
-        recipeInfoViewModel = ViewModelProvider(this, factory).get(RecipeInfoViewModel::class.java)
 
         binding.lifecycleOwner = this
         binding.recipeInfoViewModel = recipeInfoViewModel

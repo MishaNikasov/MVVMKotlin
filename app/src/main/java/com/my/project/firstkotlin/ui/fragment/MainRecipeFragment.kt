@@ -1,10 +1,9 @@
 package com.my.project.firstkotlin.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -18,8 +17,10 @@ import com.my.project.firstkotlin.ui.util.Constant
 import com.my.project.firstkotlin.ui.util.LoadMoreScrollListener
 import com.my.project.firstkotlin.ui.util.RecipeNavigator
 import com.my.project.firstkotlin.viewmodel.MainRecipesViewModel
-import com.my.project.firstkotlin.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
+@AndroidEntryPoint
 class MainRecipeFragment :
     BaseFragment(R.layout.fragment_main_recipes),
     RecipeNavigator{
@@ -27,16 +28,12 @@ class MainRecipeFragment :
     //TODO: сделать координатор лейаут
 
     private lateinit var binding : FragmentMainRecipesBinding
-    private lateinit var recipeListViewModel : MainRecipesViewModel
+    private val recipeListViewModel : MainRecipesViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentMainRecipesBinding.bind(view)
-
-        val factory = ViewModelFactory(requireActivity().application)
-
-        recipeListViewModel = ViewModelProvider(this, factory).get(MainRecipesViewModel::class.java)
 
         binding.lifecycleOwner = this
         binding.recipeViewModel = recipeListViewModel
@@ -86,6 +83,7 @@ class MainRecipeFragment :
                 }
 
                 is Resource.Loading -> {
+                    Timber.d(recipeListViewModel.getAllRecipes()?.value?.size.toString())
                     adapter.startLoading()
                 }
             }
@@ -95,6 +93,10 @@ class MainRecipeFragment :
     override fun onRecipeClick(recipe: Recipe) {
         val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(recipe.id)
         Navigation.findNavController(binding.root).navigate(action)
+    }
+
+    override fun onRecipeAdd(recipe: Recipe) {
+        recipeListViewModel.addRecipeToDB(recipe)
     }
 
 }

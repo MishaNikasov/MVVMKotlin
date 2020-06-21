@@ -7,27 +7,9 @@ import androidx.room.RoomDatabase
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.local.room.dao.RecipeDAO
 
-@Database(entities = [RecipeModel::class], version = 2, exportSchema = false)
+@Database(entities = [RecipeModel::class], version = 1, exportSchema = false)
 abstract class RecipesDatabase : RoomDatabase() {
 
-    abstract fun receiptsDao() : RecipeDAO
+    abstract fun getReceiptsDao() : RecipeDAO
 
-    companion object {
-
-        @Volatile
-        private var INSTANCE : RecipesDatabase? = null
-
-        fun getInstance (context : Context) : RecipesDatabase? {
-            if (INSTANCE == null) {
-                synchronized (RecipesDatabase::class){
-                    INSTANCE = Room.databaseBuilder(
-                        context.applicationContext
-                        , RecipesDatabase::class.java, "receiptsDB")
-                        .fallbackToDestructiveMigration()
-                        .build()
-                }
-            }
-            return INSTANCE
-        }
-    }
 }

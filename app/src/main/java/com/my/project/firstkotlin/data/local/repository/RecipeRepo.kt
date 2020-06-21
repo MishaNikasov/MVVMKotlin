@@ -1,34 +1,32 @@
 package com.my.project.firstkotlin.data.local.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import com.my.project.firstkotlin.data.local.room.RecipesDatabase
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.local.room.dao.RecipeDAO
+import javax.inject.Inject
 
-class RecipeRepo (application: Application) {
-
-    private val recipesDatabase : RecipesDatabase? = RecipesDatabase.getInstance(application)
-    private val receiptsDao : RecipeDAO? = recipesDatabase?.receiptsDao()
+class RecipeRepo @Inject constructor (
+    private val receiptsDao : RecipeDAO
+) {
 
     fun getAllRecipes () : LiveData<List<RecipeModel>>? {
-        return receiptsDao?.getAllRecipes()
+        return receiptsDao.getAllRecipes()
     }
 
     suspend fun deleteAllRecipes () {
-        receiptsDao?.deleteAllRecipes()
+        receiptsDao.deleteAllRecipes()
     }
 
     suspend fun insert(recipeModel: RecipeModel){
-        receiptsDao?.insert(recipeModel)
+        receiptsDao.insert(recipeModel)
     }
 
     suspend fun update(recipeModel: RecipeModel){
-        receiptsDao?.update(recipeModel)
+        receiptsDao.update(recipeModel)
     }
 
     suspend fun delete(recipeModel: RecipeModel){
-        receiptsDao?.delete(recipeModel)
+        receiptsDao.delete(recipeModel)
     }
 
 }
