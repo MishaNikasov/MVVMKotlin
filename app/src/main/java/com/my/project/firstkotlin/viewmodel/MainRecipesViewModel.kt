@@ -7,18 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.my.project.firstkotlin.data.TypeConverter
-import com.my.project.firstkotlin.data.remote.data.repository.RecipeRepository
-import com.my.project.firstkotlin.data.local.repository.RecipeRepo
+import com.my.project.firstkotlin.data.remote.data.repository.RemoteRecipeRepository
+import com.my.project.firstkotlin.data.local.repository.LocalRecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class MainRecipesViewModel @ViewModelInject constructor (
-    private val recipeRepo : RecipeRepo
+    private val localRecipeRepo : LocalRecipeRepo,
+    private val remoteRecipeRepository : RemoteRecipeRepository
 ) : ViewModel(), Observable {
 
     //remote
@@ -33,9 +33,9 @@ class MainRecipesViewModel @ViewModelInject constructor (
 
         val response =
             if (popularRecipesResponse != null)
-                RecipeRepository.getPopularRecipes(popularRecipesResponse?.recipes!!.size)
+                remoteRecipeRepository.getPopularRecipes(popularRecipesResponse?.recipes!!.size)
             else
-                RecipeRepository.getPopularRecipes()
+                remoteRecipeRepository.getPopularRecipes()
 
         popularRecipesList.postValue(handlePopularRecipeResponse(response))
     }
@@ -60,11 +60,11 @@ class MainRecipesViewModel @ViewModelInject constructor (
 
     fun addRecipeToDB(recipe: Recipe) {
         viewModelScope.launch {
-            recipeRepo.insert(TypeConverter.remoteToLocalRecipe(recipe))
+            localRecipeRepo.insert(TypeConverter.remoteToLocalRecipe(recipe))
         }
     }
 
-    fun getAllRecipes () : LiveData<List<RecipeModel>>? = recipeRepo.getAllRecipes()
+    fun getAllRecipes () : LiveData<List<RecipeModel>>? = localRecipeRepo.getAllRecipes()
 
     //callbacks
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}

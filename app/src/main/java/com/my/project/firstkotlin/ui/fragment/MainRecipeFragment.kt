@@ -23,9 +23,8 @@ import timber.log.Timber
 @AndroidEntryPoint
 class MainRecipeFragment :
     BaseFragment(R.layout.fragment_main_recipes),
-    RecipeNavigator{
-
-    //TODO: сделать координатор лейаут
+    RecipeNavigator
+{
 
     private lateinit var binding : FragmentMainRecipesBinding
     private val recipeListViewModel : MainRecipesViewModel by viewModels()

@@ -34,35 +34,4 @@ interface RecipeApiService {
         @Query("includeNutrition") includeNutrition : Boolean = false
     ) : Response<RecipeInfo>
 
-    companion object {
-        operator fun invoke() : RecipeApiService {
-            val requestInterceptor = Interceptor { chain ->
-
-                val url = chain.request()
-                    .url()
-                    .newBuilder()
-                    .addQueryParameter("apiKey", CommonRemote.API_KEY)
-                    .build()
-
-                val request = chain.request()
-                    .newBuilder()
-                    .url(url)
-                    .build()
-
-                    return@Interceptor chain.proceed(request)
-            }
-
-            val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(requestInterceptor)
-                .build()
-
-            return Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl(CommonRemote.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(RecipeApiService::class.java)
-        }
-    }
-
 }

@@ -5,7 +5,7 @@ import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.local.room.dao.RecipeDAO
 import javax.inject.Inject
 
-class RecipeRepo @Inject constructor (
+class LocalRecipeRepo @Inject constructor (
     private val receiptsDao : RecipeDAO
 ) {
 

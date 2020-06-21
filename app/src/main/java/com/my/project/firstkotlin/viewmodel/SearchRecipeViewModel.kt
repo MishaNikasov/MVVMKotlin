@@ -1,23 +1,22 @@
 package com.my.project.firstkotlin.viewmodel
 
-import android.app.Application
 import androidx.databinding.Observable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.my.project.firstkotlin.data.remote.data.repository.RecipeRepository
-import com.my.project.firstkotlin.data.local.repository.RecipeRepo
+import com.my.project.firstkotlin.data.remote.data.repository.RemoteRecipeRepository
+import com.my.project.firstkotlin.data.local.repository.LocalRecipeRepo
 import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class SearchRecipeViewModel @ViewModelInject constructor (
-    private val recipeRepo : RecipeRepo
+    private val localRecipeRepo : LocalRecipeRepo,
+    private val remoteRecipeRepository : RemoteRecipeRepository
 ) : ViewModel(), Observable {
 
     //remote
@@ -39,9 +38,9 @@ class SearchRecipeViewModel @ViewModelInject constructor (
         val response =
 
         if (searchRecipesResponse != null)
-            RecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size)
+            remoteRecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size)
         else
-            RecipeRepository.getRecipeResult(searchRecipes)
+            remoteRecipeRepository.getRecipeResult(searchRecipes)
 
         searchRecipesList.postValue(handleSearchRecipeResponse(response))
     }
@@ -65,7 +64,7 @@ class SearchRecipeViewModel @ViewModelInject constructor (
 
     //local
 
-    fun getAllRecipes () : LiveData<List<RecipeModel>>? = recipeRepo.getAllRecipes()
+    fun getAllRecipes () : LiveData<List<RecipeModel>>? = localRecipeRepo.getAllRecipes()
 
     //callbacks
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}

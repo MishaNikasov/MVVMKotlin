@@ -1,21 +1,20 @@
 package com.my.project.firstkotlin.viewmodel
 
-import android.app.Application
 import androidx.databinding.Observable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.my.project.firstkotlin.data.local.repository.RecipeRepo
-import com.my.project.firstkotlin.data.remote.data.repository.RecipeRepository
+import com.my.project.firstkotlin.data.local.repository.LocalRecipeRepo
+import com.my.project.firstkotlin.data.remote.data.repository.RemoteRecipeRepository
 import com.my.project.firstkotlin.data.remote.data.response.RecipeInfo
 import com.my.project.firstkotlin.data.remote.util.Resource
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class RecipeInfoViewModel @ViewModelInject constructor (
-    private val recipeRepo : RecipeRepo
+    private val localRecipeRepo : LocalRecipeRepo,
+    private val remoteRecipeRepository : RemoteRecipeRepository
 ) : ViewModel(), Observable {
 
     val recipeInfo : MutableLiveData<Resource<RecipeInfo>> = MutableLiveData()
@@ -24,7 +23,7 @@ class RecipeInfoViewModel @ViewModelInject constructor (
     fun getRecipeInfo (id : Int) {
         viewModelScope.launch {
             recipeInfo.postValue(Resource.Loading())
-            val response = RecipeRepository.getRecipeInfo(id)
+            val response = remoteRecipeRepository.getRecipeInfo(id)
             recipeInfo.postValue(handlePopularRecipeResponse(response))
         }
     }

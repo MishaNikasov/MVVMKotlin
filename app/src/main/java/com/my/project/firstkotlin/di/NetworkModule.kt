@@ -1,7 +1,6 @@
 package com.my.project.firstkotlin.di
 
 import com.my.project.firstkotlin.data.remote.data.RecipeApiService
-import com.my.project.firstkotlin.data.remote.data.repository.RecipeRepository
 import com.my.project.firstkotlin.data.remote.util.CommonRemote
 import dagger.Module
 import dagger.Provides
