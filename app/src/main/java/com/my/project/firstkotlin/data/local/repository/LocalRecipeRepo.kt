@@ -9,7 +9,7 @@ class LocalRecipeRepo @Inject constructor (
     private val receiptsDao : RecipeDAO
 ) {
 
-    fun getAllRecipes () : LiveData<List<RecipeModel>>? {
+    fun getAllRecipes () : LiveData<List<RecipeModel>> {
         return receiptsDao.getAllRecipes()
     }
 

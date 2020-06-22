@@ -4,13 +4,13 @@
     <item
         android:id="@+id/mainRecipeFragment"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/searchRecipeFragment"
         android:icon="@drawable/ic_search_white"
-        android:title="Search" />
+        android:title="@string/search" />
     <item
         android:id="@+id/newRecipeFragment"
-        android:icon="@drawable/ic_add"
-        android:title="Add" />
+        android:icon="@drawable/ic_favorites"
+        android:title="@string/favorites" />
 </menu>

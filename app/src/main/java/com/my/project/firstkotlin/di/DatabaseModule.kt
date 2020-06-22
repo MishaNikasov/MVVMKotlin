@@ -2,8 +2,8 @@ package com.my.project.firstkotlin.di
 
 import android.content.Context
 import androidx.room.Room
-import com.my.project.firstkotlin.common.Constants
 import com.my.project.firstkotlin.data.local.room.RecipesDatabase
+import com.my.project.firstkotlin.ui.util.Constant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ object DatabaseModule {
     ) = Room.databaseBuilder(
        app,
        RecipesDatabase::class.java,
-       Constants.RECIPE_DB_NAME
+       Constant.RECIPE_DB_NAME
     )
        .fallbackToDestructiveMigration()
        .build()

@@ -18,9 +18,9 @@
 
     <fragment
         android:id="@+id/newRecipeFragment"
-        android:name="com.my.project.firstkotlin.ui.fragment.NewRecipeFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.SavedRecipeFragment"
         android:label="fragment_new_recipe"
-        tools:layout="@layout/fragment_new_recipe" />
+        tools:layout="@layout/fragment_saved_recipe" />
 
     <fragment
         android:id="@+id/searchRecipeFragment"
