@@ -42,6 +42,10 @@ class MainRecipeFragment :
     private fun initUi() {
         setUpPopularList()
         recipeListViewModel.getPopularRecipes()
+
+        binding.searchBtn.setOnClickListener {
+            openSearch()
+        }
     }
 
     //top popular recipes
@@ -89,6 +93,11 @@ class MainRecipeFragment :
 
     override fun onRecipeClick(recipe: Recipe) {
         val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(recipe.id)
+        Navigation.findNavController(binding.root).navigate(action)
+    }
+
+    fun openSearch() {
+        val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToSearchRecipeFragment()
         Navigation.findNavController(binding.root).navigate(action)
     }
 

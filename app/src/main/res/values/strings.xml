@@ -11,6 +11,6 @@
     <string name="instruction"><u>Instruction</u></string>
     <string name="ingredients"><u>Ingredients</u></string>
     <string name="home">Home</string>
-    <string name="search">Search</string>
     <string name="favorites">Favorites</string>
+    <string name="search">Search</string>
 </resources>

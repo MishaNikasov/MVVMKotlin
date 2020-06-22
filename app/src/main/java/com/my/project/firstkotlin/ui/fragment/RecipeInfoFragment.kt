@@ -43,7 +43,9 @@ class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
                     it.data?.let {response ->
                         binding.recipeInfo = response
                         setUpIngredientsList(response.extendedIngredients)
-                        setUpInstructionList(response.analyzedInstructions[0].steps)
+                        if (response.analyzedInstructions.isNotEmpty()) {
+                            setUpInstructionList(response.analyzedInstructions[0].steps)
+                        }
                     }
                 }
 

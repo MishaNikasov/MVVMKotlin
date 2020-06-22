@@ -29,7 +29,7 @@ class RecipesAdapter (
         const val VIEW_TYPE_LOADING = 2
     }
 
-    class HorizontalRecipeViewHolder (private val context: Context, private val binding: ItemHorizontalRecipeBinding) : BaseViewHolder(binding) {
+    inner class HorizontalRecipeViewHolder (private val context: Context, private val binding: ItemHorizontalRecipeBinding) : BaseViewHolder(binding) {
         fun bind (recipe : Recipe, recipeNavigator: RecipeNavigator?) {
 
             val servingsTxt = "${recipe.servings} servings"
@@ -55,10 +55,29 @@ class RecipesAdapter (
         }
     }
 
-    inner class VerticalRecipeViewHolder (private val binding: ItemVerticalRecipeBinding) : BaseViewHolder(binding) {
+    inner class VerticalRecipeViewHolder (private val context: Context, private val binding: ItemVerticalRecipeBinding) : BaseViewHolder(binding) {
         fun bind (recipe : Recipe) {
+
+            val servingsTxt = "${recipe.servings} servings"
+            val time = "${recipe.readyInMinutes} min"
+
             binding.title.text = recipe.title
-            binding.description.text = recipe.sourceUrl
+            binding.servings.text = servingsTxt
+            binding.time.text = time
+
+            val url = "https://spoonacular.com/recipeImages/${recipe.image}"
+
+            Glide
+                .with(context)
+                .load(url)
+                .centerCrop()
+                .dontAnimate()
+                .placeholder(R.drawable.recipe_holder)
+                .into(binding.image)
+
+            binding.root.setOnClickListener {
+                recipeNavigator?.onRecipeClick(recipe)
+            }
         }
     }
 
@@ -100,7 +119,7 @@ class RecipesAdapter (
                 HorizontalRecipeViewHolder(parent.context, binding)
             } else {
                 val binding : ItemVerticalRecipeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_vertical_recipe, parent, false)
-                VerticalRecipeViewHolder(binding)
+                VerticalRecipeViewHolder(parent.context, binding)
             }
 
         } else {

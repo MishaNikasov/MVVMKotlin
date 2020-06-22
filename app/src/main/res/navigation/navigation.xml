@@ -14,6 +14,9 @@
             android:id="@+id/action_mainRecipeFragment_to_recipeInfoFragment"
             app:destination="@id/recipeInfoFragment"
             app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_mainRecipeFragment_to_searchRecipeFragment"
+            app:destination="@id/searchRecipeFragment" />
     </fragment>
 
     <fragment
@@ -25,7 +28,11 @@
     <fragment
         android:id="@+id/searchRecipeFragment"
         android:name="com.my.project.firstkotlin.ui.fragment.SearchRecipeFragment"
-        android:label="SearchRecipeFragment" />
+        android:label="SearchRecipeFragment" >
+        <action
+            android:id="@+id/action_searchRecipeFragment_to_recipeInfoFragment"
+            app:destination="@id/recipeInfoFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/recipeInfoFragment"
