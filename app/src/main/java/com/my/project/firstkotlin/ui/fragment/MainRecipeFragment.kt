@@ -18,7 +18,6 @@ import com.my.project.firstkotlin.ui.util.LoadMoreScrollListener
 import com.my.project.firstkotlin.ui.util.RecipeNavigator
 import com.my.project.firstkotlin.viewmodel.MainRecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainRecipeFragment :
@@ -82,7 +81,6 @@ class MainRecipeFragment :
                 }
 
                 is Resource.Loading -> {
-                    Timber.d(recipeListViewModel.getAllRecipes()?.value?.size.toString())
                     adapter.startLoading()
                 }
             }
@@ -92,10 +90,6 @@ class MainRecipeFragment :
     override fun onRecipeClick(recipe: Recipe) {
         val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(recipe.id)
         Navigation.findNavController(binding.root).navigate(action)
-    }
-
-    override fun onRecipeAdd(recipe: Recipe) {
-        recipeListViewModel.addRecipeToDB(recipe)
     }
 
 }

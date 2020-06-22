@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.my.project.firstkotlin.data.TypeConverter
 import com.my.project.firstkotlin.R
+import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.databinding.FragmentSavedRecipeBinding
 import com.my.project.firstkotlin.ui.adapter.RecipesAdapter
 import com.my.project.firstkotlin.ui.util.Constant
@@ -31,11 +34,18 @@ class SavedRecipeFragment : Fragment(R.layout.fragment_saved_recipe) {
 
     private fun setUpList() {
 
-        val recipeAdapter = RecipesAdapter(Constant.ORIENTATION_HORIZONTAL)
+        val recipeAdapter = RecipesAdapter(Constant.ORIENTATION_VERTICAL)
+        val recipesList : ArrayList<Recipe> = arrayListOf()
+
+        savedRecipeViewModel.getAllSavedRecipes().observe(viewLifecycleOwner, Observer {recipesModelList ->
+            for (recipeModel in recipesModelList) {
+                recipesList.add(TypeConverter.localToRemoteRecipe(recipeModel))
+                Timber.d(savedRecipeViewModel.getAllSavedRecipes().value?.size.toString())
+                recipeAdapter.setRecipesList(recipesList)
+            }
+        })
 
         binding.savedRecipesRecycler.adapter = recipeAdapter
-
-        Timber.d(savedRecipeViewModel.getAllSavedRecipes().value?.size.toString())
 
     }
 }

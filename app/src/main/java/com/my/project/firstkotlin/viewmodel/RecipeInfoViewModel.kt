@@ -5,7 +5,9 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.my.project.firstkotlin.data.TypeConverter
 import com.my.project.firstkotlin.data.local.repository.LocalRecipeRepo
+import com.my.project.firstkotlin.data.local.room.model.RecipeModel
 import com.my.project.firstkotlin.data.remote.data.repository.RemoteRecipeRepository
 import com.my.project.firstkotlin.data.remote.data.response.RecipeInfo
 import com.my.project.firstkotlin.data.remote.util.Resource
@@ -17,7 +19,10 @@ class RecipeInfoViewModel @ViewModelInject constructor (
     private val remoteRecipeRepository : RemoteRecipeRepository
 ) : ViewModel(), Observable {
 
+    //remote recipe
     val recipeInfo : MutableLiveData<Resource<RecipeInfo>> = MutableLiveData()
+    //local recipe
+    val localRecipe : MutableLiveData<RecipeModel?> = MutableLiveData()
 
     //remote
     fun getRecipeInfo (id : Int) {
@@ -34,11 +39,41 @@ class RecipeInfoViewModel @ViewModelInject constructor (
                 return Resource.Success(info)
             }
         }
-        return Resource.Error("Recipe info error : $response.message()")
+        return Resource.Error("Recipe info error : ${response.message()}")
     }
 
     //local
-    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
+    fun addOrDeleteRecipe (recipe: RecipeInfo) {
 
+        val recipeModel = TypeConverter.remoteInfoToLocalRecipe(recipe)
+
+        if (localRecipe.value == null) {
+            addRecipeToDB(recipeModel)
+            localRecipe.postValue(recipeModel)
+        } else {
+            deleteRecipeFromDB(recipeModel)
+            localRecipe.postValue(null)
+        }
+    }
+
+    private fun addRecipeToDB(recipe: RecipeModel) {
+        viewModelScope.launch {
+            localRecipeRepo.insert(recipe)
+        }
+    }
+
+    private fun deleteRecipeFromDB(recipe: RecipeModel) {
+        viewModelScope.launch {
+            localRecipeRepo.deleteById(recipe.remoteId)
+        }
+    }
+
+    fun getLocalRecipe (id : Int) {
+        viewModelScope.launch {
+            localRecipe.postValue(localRecipeRepo.getById(id))
+        }
+    }
+
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
 }

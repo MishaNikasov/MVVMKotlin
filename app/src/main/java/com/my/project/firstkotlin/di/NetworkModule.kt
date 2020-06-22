@@ -1,7 +1,7 @@
 package com.my.project.firstkotlin.di
 
 import com.my.project.firstkotlin.data.remote.data.RecipeApiService
-import com.my.project.firstkotlin.data.remote.util.CommonRemote
+import com.my.project.firstkotlin.ui.util.Constant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ object NetworkModule {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("apiKey", CommonRemote.API_KEY)
+                    .addQueryParameter("apiKey", Constant.API_KEY)
                     .build()
 
                 val request = chain.request()
@@ -41,7 +41,7 @@ object NetworkModule {
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(CommonRemote.BASE_URL)
+                .baseUrl(Constant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
     }

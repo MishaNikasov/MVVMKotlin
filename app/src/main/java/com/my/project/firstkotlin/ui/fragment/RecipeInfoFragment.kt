@@ -34,6 +34,7 @@ class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
         binding.recipeInfoViewModel = recipeInfoViewModel
 
         recipeInfoViewModel.getRecipeInfo(args.recipeId)
+        recipeInfoViewModel.getLocalRecipe(args.recipeId)
 
         recipeInfoViewModel.recipeInfo.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -53,6 +54,14 @@ class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
                 is Resource.Loading -> {
                     binding.loadingScreen.visibility = View.VISIBLE
                 }
+            }
+        })
+
+        recipeInfoViewModel.localRecipe.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                binding.favoriteIco.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_full))
+            } else {
+                binding.favoriteIco.setImageDrawable(resources.getDrawable(R.drawable.ic_favorites_empty))
             }
         })
     }

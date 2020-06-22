@@ -37,6 +37,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="320dp"/>
 
+                <ImageView
+                    android:onClick="@{() -> recipeInfoViewModel.addOrDeleteRecipe(recipeInfo)}"
+                    android:id="@+id/favorite_ico"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="@dimen/basic_margin"
+                    android:src="@drawable/ic_favorites_empty"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"/>
+
                 <LinearLayout
                     android:id="@+id/title_block"
                     android:elevation="@dimen/elevation"

@@ -13,7 +13,7 @@ data class RecipeModel (
     @ColumnInfo(name = "main_image")
     var mainImage : String,
     var timeToReady : Int,
-    var sourceUrl: String
+    var sourceUrl : String
 
 ){
     @PrimaryKey(autoGenerate = true)

@@ -14,9 +14,13 @@ import com.my.project.firstkotlin.databinding.ItemProgressBinding
 import com.my.project.firstkotlin.databinding.ItemVerticalRecipeBinding
 import com.my.project.firstkotlin.ui.util.Constant
 import com.my.project.firstkotlin.ui.util.RecipeNavigator
-import kotlinx.android.synthetic.main.item_progress.view.*
 
-class RecipesAdapter (private val orientation : Int, private val recipeNavigator: RecipeNavigator? = null) : RecyclerView.Adapter<RecipesAdapter.BaseViewHolder>() {
+class RecipesAdapter (
+    private val orientation : Int,
+    private val recipeNavigator: RecipeNavigator? = null
+)
+    : RecyclerView.Adapter<RecipesAdapter.BaseViewHolder>()
+{
 
     private var recipeModelList : ArrayList<Recipe?> = arrayListOf()
 
@@ -34,10 +38,6 @@ class RecipesAdapter (private val orientation : Int, private val recipeNavigator
             binding.title.text = recipe.title
             binding.servings.text = servingsTxt
             binding.time.text = time
-
-            binding.addBtn.setOnClickListener {
-                recipeNavigator?.onRecipeAdd(recipe)
-            }
 
             val url = "https://spoonacular.com/recipeImages/${recipe.image}"
 

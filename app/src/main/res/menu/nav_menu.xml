@@ -11,6 +11,6 @@
         android:title="@string/search" />
     <item
         android:id="@+id/newRecipeFragment"
-        android:icon="@drawable/ic_favorites"
+        android:icon="@drawable/ic_favorite_full"
         android:title="@string/favorites" />
 </menu>

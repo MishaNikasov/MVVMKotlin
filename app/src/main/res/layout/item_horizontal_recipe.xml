@@ -22,15 +22,6 @@
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
-            <Button
-                android:layout_marginBottom="@dimen/basic_margin"
-                android:layout_marginEnd="@dimen/basic_margin"
-                android:id="@+id/add_btn"
-                android:background="@drawable/add_recipe_btn_background"
-                android:layout_gravity="bottom|end"
-                android:layout_width="35dp"
-                android:layout_height="35dp"/>
         </FrameLayout>
 
         <LinearLayout

@@ -4,5 +4,4 @@ import com.my.project.firstkotlin.data.remote.data.response.Recipe
 
 interface RecipeNavigator {
     fun onRecipeClick (recipe : Recipe)
-    fun onRecipeAdd (recipe: Recipe)
 }
