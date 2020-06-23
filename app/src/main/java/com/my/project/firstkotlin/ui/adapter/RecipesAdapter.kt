@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.my.project.firstkotlin.R
+import com.my.project.firstkotlin.data.remote.data.response.Ingredient
 import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.databinding.ItemHorizontalRecipeBinding
 import com.my.project.firstkotlin.databinding.ItemProgressBinding
@@ -22,12 +25,16 @@ class RecipesAdapter (
     : RecyclerView.Adapter<RecipesAdapter.BaseViewHolder>()
 {
 
-    private var recipeModelList : ArrayList<Recipe?> = arrayListOf()
-
-    companion object {
-        const val VIEW_TYPE_ITEM = 1
-        const val VIEW_TYPE_LOADING = 2
+    private val differCallback = object : DiffUtil.ItemCallback<Recipe>() {
+        override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+            return oldItem.id == newItem.id
+        }
+        override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+            return oldItem == newItem
+        }
     }
+
+    private val differ = AsyncListDiffer(this, differCallback)
 
     inner class HorizontalRecipeViewHolder (private val context: Context, private val binding: ItemHorizontalRecipeBinding) : BaseViewHolder(binding) {
         fun bind (recipe : Recipe, recipeNavigator: RecipeNavigator?) {
@@ -81,76 +88,39 @@ class RecipesAdapter (
         }
     }
 
-    inner class LoadingViewHolder (private val binding: ItemProgressBinding) : BaseViewHolder(binding) {
-        fun bind (orientation: Int) {
-            val params = binding.root.layoutParams as ViewGroup.LayoutParams
-            if (orientation == Constant.ORIENTATION_HORIZONTAL) {
-                params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-                params.height = ViewGroup.LayoutParams.MATCH_PARENT
-            } else {
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT
-                params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-            }
-            binding.root.layoutParams = params
-        }
-    }
-
     open class BaseViewHolder (viewDataBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewDataBinding.root)
-
-    fun setRecipesList (recipeModelList: List<Recipe>) {
-        this.recipeModelList = ArrayList(recipeModelList)
-        notifyDataSetChanged()
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if (recipeModelList[position] != null)
-            VIEW_TYPE_ITEM
-        else
-            VIEW_TYPE_LOADING
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
         val layoutInflater : LayoutInflater = LayoutInflater.from(parent.context)
 
-        return if (viewType == VIEW_TYPE_ITEM) {
-            if (orientation == Constant.ORIENTATION_HORIZONTAL){
-                val binding : ItemHorizontalRecipeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_horizontal_recipe, parent, false)
-                HorizontalRecipeViewHolder(parent.context, binding)
-            } else {
-                val binding : ItemVerticalRecipeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_vertical_recipe, parent, false)
-                VerticalRecipeViewHolder(parent.context, binding)
-            }
-
+        return if (orientation == Constant.ORIENTATION_HORIZONTAL){
+            val binding : ItemHorizontalRecipeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_horizontal_recipe, parent, false)
+            HorizontalRecipeViewHolder(parent.context, binding)
         } else {
-            val binding : ItemProgressBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_progress, parent, false)
-            LoadingViewHolder(binding)
+            val binding : ItemVerticalRecipeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_vertical_recipe, parent, false)
+            VerticalRecipeViewHolder(parent.context, binding)
         }
-
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
-            is HorizontalRecipeViewHolder -> recipeModelList[position]?.let {
+            is HorizontalRecipeViewHolder -> differ.currentList[position].let {
                 holder.bind(it, recipeNavigator)
             }
-            is VerticalRecipeViewHolder -> recipeModelList[position]?.let {
+            is VerticalRecipeViewHolder -> differ.currentList[position].let {
                 holder.bind(it)
             }
-            is LoadingViewHolder -> holder.bind(orientation)
         }
     }
 
-    fun startLoading() {
-        recipeModelList.add(null)
-        notifyItemInserted(recipeModelList.size - 1)
+    override fun getItemCount() : Int = differ.currentList.size
+
+    fun setRecipesList (recipeModelList: List<Recipe>) {
+        differ.submitList(recipeModelList)
     }
 
-    fun stopLoading() {
-        recipeModelList.removeAt(recipeModelList.size - 1)
-        notifyItemRemoved(recipeModelList.size)
+    fun clearList () {
+        differ.currentList.clear()
     }
-
-    override fun getItemCount() : Int = recipeModelList.size
-
 }

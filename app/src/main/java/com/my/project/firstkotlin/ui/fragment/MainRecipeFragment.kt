@@ -75,17 +75,14 @@ class MainRecipeFragment :
                     it.data?.let {response ->
                         adapter.setRecipesList(response.recipes.toList())
                         loadMoreListener.setLoaded()
-                        adapter.stopLoading()
                     }
                 }
 
                 is Resource.Error -> {
                     loadMoreListener.setLoaded()
-                    adapter.stopLoading()
                 }
 
                 is Resource.Loading -> {
-                    adapter.startLoading()
                 }
             }
         })
