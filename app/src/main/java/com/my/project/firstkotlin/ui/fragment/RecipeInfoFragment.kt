@@ -2,8 +2,12 @@ package com.my.project.firstkotlin.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.my.project.firstkotlin.R
@@ -66,6 +70,10 @@ class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
                 binding.favoriteIco.setImageDrawable(resources.getDrawable(R.drawable.ic_favorites_empty))
             }
         })
+
+        binding.backBtn.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun setUpIngredientsList(ingredients : List<Ingredient>) {

@@ -5,11 +5,15 @@
     <dimen name="average_margin">12dp</dimen>
     <dimen name="big_margin">16dp</dimen>
     <dimen name="biggest_margin">32dp</dimen>
+    <dimen name="large_margin">45dp</dimen>
 
+    <dimen name="small_padding">4dp</dimen>
     <dimen name="basic_padding">8dp</dimen>
     <dimen name="big_padding">16dp</dimen>
+    <dimen name="biggest_padding">32dp</dimen>
 
     <dimen name="corner_radius_small">3dp</dimen>
+    <dimen name="corner_radius_average">8dp</dimen>
     <dimen name="corner_radius">15dp</dimen>
     <dimen name="elevation">2dp</dimen>
 

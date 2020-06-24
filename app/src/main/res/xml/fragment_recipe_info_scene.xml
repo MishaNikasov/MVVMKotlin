@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Transition
+        app:constraintSetStart="@layout/fragment_recipe_info"
+        app:constraintSetEnd="@layout/fragment_recipe_info_end">
+
+        <KeyFrameSet>
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionTarget="@id/back_btn">
+                <CustomAttribute
+                    app:attributeName="colorFilter"
+                    app:customColorValue="#fff"/>
+            </KeyAttribute>
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionTarget="@id/back_btn">
+                <CustomAttribute
+                    app:attributeName="colorFilter"
+                    app:customColorValue="#000"/>
+            </KeyAttribute>
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:elevation="@dimen/elevation"
+                app:framePosition="0"
+                app:motionTarget="@id/title_block">
+            </KeyAttribute>
+            <KeyAttribute
+                android:elevation="0dp"
+                app:framePosition="85"
+                app:motionTarget="@id/title_block">
+            </KeyAttribute>
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="90"
+                app:motionTarget="@id/divider">
+            </KeyAttribute>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@id/divider">
+            </KeyAttribute>
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionTarget="@id/favorite_ico">
+                <CustomAttribute
+                    app:attributeName="colorFilter"
+                    app:customColorValue="#fff"/>
+            </KeyAttribute>
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionTarget="@id/favorite_ico">
+                <CustomAttribute
+                    app:attributeName="colorFilter"
+                    app:customColorValue="#000"/>
+            </KeyAttribute>
+        </KeyFrameSet>
+
+        <OnSwipe
+            app:touchAnchorId="@+id/scrollable_block"
+            app:dragDirection="dragUp"
+            app:touchAnchorSide="top"/>
+    </Transition>
+</MotionScene>

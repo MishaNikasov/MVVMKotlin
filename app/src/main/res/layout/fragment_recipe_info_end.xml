@@ -13,42 +13,40 @@
     </data>
 
     <RelativeLayout
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.motion.widget.MotionLayout
-            app:layoutDescription="@xml/fragment_recipe_info_scene"
             android:id="@+id/recipe_info_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="MotionLayoutInvalidSceneFileReference">
 
             <ImageView
+                android:alpha="0"
                 app:load_image="@{recipeInfo.image}"
                 android:id="@+id/image"
                 app:layout_constraintTop_toTopOf="parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/recipe_holder"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"/>
+                android:layout_height="?actionBarSize"/>
 
             <LinearLayout
+                android:scaleX="0.9"
+                android:scaleY="0.9"
                 android:id="@+id/title_block"
-                android:elevation="@dimen/elevation"
+                android:elevation="0dp"
                 android:backgroundTint="@color/white"
                 android:layout_marginStart="@dimen/large_margin"
                 android:layout_marginEnd="@dimen/large_margin"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="@id/image"
-                app:layout_constraintEnd_toEndOf="@id/image"
-                app:layout_constraintTop_toBottomOf="@id/image"
-                app:layout_constraintBottom_toBottomOf="@id/image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:padding="@dimen/big_padding"
-                android:paddingTop="@dimen/big_padding"
-                android:paddingBottom="@dimen/big_padding"
-                android:paddingStart="@dimen/biggest_padding"
-                android:paddingEnd="@dimen/biggest_padding"
                 android:background="@drawable/search_rounded_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -70,6 +68,7 @@
                     app:textType="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
             </LinearLayout>
 
             <androidx.core.widget.NestedScrollView
@@ -87,7 +86,6 @@
 
                     <com.my.project.firstkotlin.common.AppTextView
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/info_block"
                         app:html_text="@{recipeInfo.summary}"
                         android:layout_margin="@dimen/big_margin"
                         android:gravity="start"
@@ -237,7 +235,8 @@
             </androidx.core.widget.NestedScrollView>
 
             <View
-                android:visibility="invisible"
+                android:alpha="0"
+                android:visibility="visible"
                 android:id="@+id/toolbar"
                 android:background="@color/white"
                 app:layout_constraintTop_toTopOf="parent"
@@ -245,7 +244,7 @@
                 android:layout_height="?actionBarSize"/>
 
             <View
-                android:alpha="0"
+                android:alpha="1"
                 android:id="@+id/divider"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/title_block"
@@ -254,35 +253,32 @@
 
             <ImageView
                 android:background="@drawable/ripple_bg"
-                android:layout_marginEnd="@dimen/basic_margin"
-                android:padding="@dimen/small_padding"
                 app:layout_constraintTop_toTopOf="@id/toolbar"
-                app:layout_constraintBottom_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@id/title_block"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_gravity="end"
                 android:onClick="@{() -> recipeInfoViewModel.addOrDeleteRecipe(recipeInfo)}"
+                android:padding="@dimen/small_padding"
+                android:layout_marginEnd="@dimen/basic_margin"
                 android:id="@+id/favorite_ico"
-                android:tint="@color/white"
+                android:tint="@color/black"
                 android:src="@drawable/ic_favorites_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <ImageView
+                android:background="@drawable/ripple_bg"
                 android:layout_marginStart="@dimen/basic_margin"
                 android:padding="@dimen/small_padding"
-                android:clickable="true"
-                android:background="@drawable/ripple_bg"
+                app:layout_constraintBottom_toBottomOf="@id/title_block"
                 app:layout_constraintTop_toTopOf="@id/toolbar"
-                app:layout_constraintBottom_toBottomOf="@id/toolbar"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_gravity="start"
                 android:id="@+id/back_btn"
-                android:tint="@color/white"
+                android:tint="@color/black"
                 android:src="@drawable/ic_arrow_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="true" />
-
+                android:layout_height="wrap_content"/>
 
         </androidx.constraintlayout.motion.widget.MotionLayout>
 

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.my.project.firstkotlin.R
@@ -90,12 +91,12 @@ class MainRecipeFragment :
 
     override fun onRecipeClick(recipe: Recipe) {
         val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(recipe.id)
-        Navigation.findNavController(binding.root).navigate(action)
+        findNavController().navigate(action)
     }
 
     fun openSearch() {
         val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToSearchRecipeFragment()
-        Navigation.findNavController(binding.root).navigate(action)
+        findNavController().navigate(action)
     }
 
 }

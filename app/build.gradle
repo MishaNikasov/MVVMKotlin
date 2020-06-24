@@ -107,4 +107,6 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:1.0.0-alpha01"
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    // MotionLayout
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
 }
