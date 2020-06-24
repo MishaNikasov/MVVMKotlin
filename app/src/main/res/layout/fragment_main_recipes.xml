@@ -11,68 +11,98 @@
             type="com.my.project.firstkotlin.viewmodel.MainRecipesViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
-        android:fillViewport="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <com.google.android.material.appbar.AppBarLayout
+            app:elevation="0dp"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                app:layout_scrollFlags="enterAlways|scroll"
                 android:id="@+id/search_btn"
-                android:layout_marginTop="@dimen/big_margin"
-                android:layout_marginStart="@dimen/big_margin"
-                android:layout_marginEnd="@dimen/big_margin"
-                android:background="@drawable/search_rounded_bg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/big_margin"
+                android:layout_marginTop="@dimen/big_margin"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/search_rounded_bg">
 
                 <ImageView
-                    android:layout_marginTop="@dimen/average_margin"
-                    android:layout_marginStart="@dimen/average_margin"
-                    android:layout_marginBottom="@dimen/average_margin"
-                    android:layout_marginEnd="@dimen/average_margin"
-                    android:src="@drawable/ic_search"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/average_margin"
+                    android:layout_marginTop="@dimen/average_margin"
+                    android:layout_marginEnd="@dimen/average_margin"
+                    android:layout_marginBottom="@dimen/average_margin"
+                    android:src="@drawable/ic_search" />
 
                 <com.my.project.firstkotlin.common.AppTextView
-                    android:gravity="start|center"
-                    android:layout_marginEnd="@dimen/average_margin"
-                    android:layout_gravity="center"
-                    android:textColor="@color/text_gray"
-                    android:background="@android:color/transparent"
-                    android:text="@string/search"
-                    android:textSize="@dimen/text_normal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/average_margin"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center"
+                    android:text="@string/search"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_normal" />
 
             </LinearLayout>
 
-            <com.my.project.firstkotlin.common.AppTextView
-                app:textType="bold"
-                android:layout_marginStart="@dimen/big_margin"
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:background="@color/white"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:id="@+id/scrollable_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_btn"
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_marginTop="@dimen/big_margin"
-                android:layout_marginBottom="@dimen/big_margin"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_title"
-                android:text="@string/most_popular_recipes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_horizontal_recipe"
-                android:orientation="horizontal"
-                android:id="@+id/popular_recipes_recycler"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
 
-        </LinearLayout>
+                <com.my.project.firstkotlin.common.AppTextView
+                    android:id="@+id/most_popular_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/big_margin"
+                    android:text="@string/most_popular_recipes"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_title"
+                    app:textType="bold" />
 
-    </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/popular_recipes_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_margin"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_horizontal_recipe" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:background="@color/light_gray"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </layout>

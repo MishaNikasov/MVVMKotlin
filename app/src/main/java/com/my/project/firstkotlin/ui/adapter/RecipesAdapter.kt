@@ -119,8 +119,4 @@ class RecipesAdapter (
     fun setRecipesList (recipeModelList: List<Recipe>) {
         differ.submitList(recipeModelList)
     }
-
-    fun clearList () {
-        differ.currentList.clear()
-    }
 }

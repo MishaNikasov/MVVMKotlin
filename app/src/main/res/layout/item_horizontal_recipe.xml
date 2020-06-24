@@ -4,9 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/ripple_bg"
         android:layout_margin="@dimen/basic_margin"
         android:layout_width="280dp"
-        android:layout_height="wrap_content">
+        android:layout_height="235dp">
 
         <FrameLayout
             android:id="@+id/image_block"
@@ -16,7 +17,6 @@
             android:layout_height="160dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                app:elevation="10dp"
                 app:riv_corner_radius="@dimen/corner_radius"
                 android:id="@+id/image"
                 android:scaleType="centerCrop"
@@ -25,6 +25,8 @@
         </FrameLayout>
 
         <LinearLayout
+            android:paddingStart="@dimen/basic_padding"
+            android:paddingEnd="@dimen/basic_padding"
             android:id="@+id/top_panel"
             android:layout_marginTop="@dimen/basic_margin"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,16 +72,21 @@
         </LinearLayout>
 
         <com.my.project.firstkotlin.common.AppTextView
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/basic_margin"
+            android:paddingStart="@dimen/basic_padding"
+            android:paddingEnd="@dimen/basic_padding"
+            android:paddingBottom="@dimen/basic_padding"
+            android:text="Vegan Meal Title"
             android:textColor="@color/black"
             android:textSize="@dimen/text_average"
-            app:textType="bold"
-            android:layout_marginTop="@dimen/basic_margin"
-            app:layout_constraintTop_toBottomOf="@id/top_panel"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/title"
-            android:text="Vegan Meal Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toBottomOf="@id/top_panel"
+            app:textType="bold" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

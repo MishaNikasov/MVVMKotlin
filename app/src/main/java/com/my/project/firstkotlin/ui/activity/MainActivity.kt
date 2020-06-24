@@ -19,22 +19,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        setUpToolbar()
         setUpNavigation()
-    }
-
-    private fun setUpToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
-
 
     private fun setUpNavigation() {
         val navController = findNavController(R.id.nav_host)
@@ -61,18 +52,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideBottomNav() {
         binding.bottomNavigationView.visibility = View.GONE
-    }
-
-    private fun showToolbar() {
-        binding.appBar.setExpanded(true, true)
-        binding.appBar.visibility = View.VISIBLE
-        binding.toolbar.visibility = View.VISIBLE
-    }
-
-    private fun hideToolbar() {
-        binding.appBar.setExpanded(false, false)
-        binding.appBar.visibility = View.GONE
-        binding.toolbar.visibility = View.GONE
     }
 
 //    private fun setUpBottomNavigation() {

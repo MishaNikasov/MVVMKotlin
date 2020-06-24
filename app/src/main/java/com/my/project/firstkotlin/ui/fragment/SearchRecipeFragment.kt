@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.my.project.firstkotlin.R
@@ -20,7 +21,9 @@ import com.my.project.firstkotlin.ui.util.LoadMoreScrollListener
 import com.my.project.firstkotlin.ui.util.RecipeNavigator
 import com.my.project.firstkotlin.viewmodel.SearchRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), RecipeNavigator{
@@ -29,6 +32,8 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
     private val searchRecipeViewModel: SearchRecipeViewModel by viewModels()
 
     private lateinit var adapter : RecipesAdapter
+
+    private var searchJob : Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,26 +48,34 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
 
     private fun initUi () {
 
-        showSearch()
+        requestSearch()
         setUpSearchList()
 
         binding.searchText.doAfterTextChanged {
             it?.let {
-                if (it.toString().isNotEmpty()) {
-                    binding.close.visibility = View.VISIBLE
-                    searchRecipeViewModel.searchRecipes(it.toString())
-                    adapter.clearList()
-                } else
-                    binding.close.visibility = View.GONE
+                search(it.toString())
             }
         }
 
         binding.close.setOnClickListener {
-            binding.searchText.setText("")
+            requireActivity().onBackPressed()
         }
     }
 
-    private fun showSearch() {
+    private fun search(txt: String) {
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            delay(Constant.SEARCH_DELAY)
+            if (txt.isNotEmpty()) {
+                searchRecipeViewModel.cleanCurrentList()
+                binding.close.visibility = View.VISIBLE
+                searchRecipeViewModel.searchRecipes(txt)
+            } else
+                binding.close.visibility = View.GONE
+        }
+    }
+
+    private fun requestSearch() {
         binding.searchText.isFocusableInTouchMode = true;
         binding.searchText.requestFocus()
 
@@ -96,18 +109,29 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
                 is Resource.Success -> {
                     it.data?.let {response ->
                         adapter.setRecipesList(response.recipes.toList())
+                        stopLoading()
                         loadMoreListener.setLoaded()
                     }
                 }
 
                 is Resource.Error -> {
+                    stopLoading()
                     loadMoreListener.setLoaded()
                 }
 
                 is Resource.Loading -> {
+                    startLoading()
                 }
             }
         })
+    }
+
+    private fun stopLoading() {
+        binding.loadingScreen.visibility = View.GONE
+    }
+
+    private fun startLoading() {
+        binding.loadingScreen.visibility = View.VISIBLE
     }
 
     override fun onRecipeClick(recipe: Recipe) {
