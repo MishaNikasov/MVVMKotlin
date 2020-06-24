@@ -92,11 +92,39 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_horizontal_recipe" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <LinearLayout
+                    android:gravity="center"
                     android:background="@color/light_gray"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+
+                    <com.my.project.firstkotlin.common.AppTextView
+                        android:layout_gravity="center"
+                        android:id="@+id/types"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/big_margin"
+                        android:layout_marginBottom="@dimen/biggest_margin"
+                        android:text="What are you looking for?"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_title"
+                        app:textType="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginStart="@dimen/big_margin"
+                        android:layout_marginEnd="@dimen/big_margin"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/big_margin"
+                        android:overScrollMode="never"
+                        android:id="@+id/type_recycler"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/item_type_model"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

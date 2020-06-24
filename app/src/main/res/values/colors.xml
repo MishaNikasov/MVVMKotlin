@@ -9,8 +9,8 @@
     <color name="white">#fff</color>
     <color name="white_transparent">#90FFFFFF</color>
     <color name="light_gray_bg">#F3F3F3</color>
-    <color name="light_gray">#EAEAEA</color>
-    <color name="dark_gray">#ACACAC</color>
+    <color name="light_gray">#EFEFEF</color>
+    <color name="dark_gray">#BDBDBD</color>
 
     <color name="receipt_item_bg">#F1F1F1</color>
     <color name="receipt_item_title">#2E7FC6</color>
@@ -18,4 +18,10 @@
     <color name="receipt_item_text">#7E7E7E</color>
     <color name="text_gray">#5A5A5A</color>
 
+    <color name="smooth_1">#ccff99</color>
+    <color name="smooth_2">#ff99cc</color>
+    <color name="smooth_3">#a3dfd2</color>
+    <color name="smooth_4">#ffe99e</color>
+    <color name="smooth_5">#ff917f</color>
+    <color name="smooth_6">#afeeee</color>
 </resources>

@@ -84,8 +84,8 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
     }
 
     //todo: add categories
-    //todo: typefont
-    //todo: hied ingredients
+    //todo: typeface
+    //todo: filter
     private fun setUpSearchList() {
 
         val loadMoreListener : LoadMoreScrollListener

@@ -22,52 +22,63 @@
             android:layout_height="100dp" />
 
         <LinearLayout
-            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/basic_margin"
-            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.my.project.firstkotlin.common.AppTextView
-                app:textType="bold"
-                android:textColor="@color/black"
-                android:text="@string/app_name"
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/black"
+                app:textType="bold" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <com.my.project.firstkotlin.common.AppTextView
                     android:id="@+id/time"
-                    android:layout_marginTop="@dimen/basic_margin"
-                    android:textColor="@color/receipt_item_text"
-                    android:text="@string/app_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/basic_margin"
+                    android:text="@string/app_name"
+                    android:textColor="@color/receipt_item_text" />
 
                 <com.my.project.firstkotlin.common.AppTextView
-                    android:layout_marginTop="@dimen/basic_margin"
-                    android:textColor="@color/receipt_item_text"
-                    android:text="  •  "
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/basic_margin"
+                    android:text="  •  "
+                    android:textColor="@color/receipt_item_text" />
 
                 <com.my.project.firstkotlin.common.AppTextView
                     android:id="@+id/servings"
-                    android:layout_marginTop="@dimen/basic_margin"
-                    android:textColor="@color/receipt_item_text"
-                    android:text="@string/app_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/basic_margin"
+                    android:text="@string/app_name"
+                    android:textColor="@color/receipt_item_text" />
 
             </LinearLayout>
 
+            <com.my.project.firstkotlin.common.AppTextView
+                android:id="@+id/summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/basic_margin"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Summary"
+                android:textColor="@color/black"
+                app:textType="bold" />
 
         </LinearLayout>
 

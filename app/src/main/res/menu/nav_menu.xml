@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_home"
         android:title="@string/home" />
     <item
-        android:id="@+id/newRecipeFragment"
+        android:id="@+id/savedRecipesFragment"
         android:icon="@drawable/ic_favorite_full"
         android:title="@string/favorites" />
 </menu>

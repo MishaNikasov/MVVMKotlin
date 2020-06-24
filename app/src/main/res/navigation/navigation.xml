@@ -20,10 +20,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/newRecipeFragment"
+        android:id="@+id/savedRecipesFragment"
         android:name="com.my.project.firstkotlin.ui.fragment.SavedRecipeFragment"
         android:label="fragment_new_recipe"
-        tools:layout="@layout/fragment_saved_recipe" />
+        tools:layout="@layout/fragment_saved_recipe" >
+        <action
+            android:id="@+id/action_savedRecipesFragment_to_recipeInfoFragment"
+            app:destination="@id/recipeInfoFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchRecipeFragment"

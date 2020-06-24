@@ -10,11 +10,12 @@ import retrofit2.http.Query
 
 interface RecipeApiService {
 
-    @GET("recipes/search")
+    @GET("recipes/complexSearch")
     suspend fun searchRecipes(
         @Query("query") receipt : String,
         @Query("offset") offset : Int = 0,
-        @Query("number") number : Int = Constant.ITEMS_COUNT
+        @Query("number") number : Int = Constant.ITEMS_COUNT,
+        @Query("addRecipeInformation") addRecipeInformation : Boolean = true
     ) : Response<RecipeResponse>
 
     @GET("recipes/search")

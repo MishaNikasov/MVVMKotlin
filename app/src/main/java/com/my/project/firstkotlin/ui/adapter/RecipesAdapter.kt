@@ -1,8 +1,11 @@
 package com.my.project.firstkotlin.ui.adapter
 
 import android.content.Context
+import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -17,6 +20,7 @@ import com.my.project.firstkotlin.databinding.ItemProgressBinding
 import com.my.project.firstkotlin.databinding.ItemVerticalRecipeBinding
 import com.my.project.firstkotlin.ui.util.Constant
 import com.my.project.firstkotlin.ui.util.RecipeNavigator
+import timber.log.Timber
 
 class RecipesAdapter (
     private val orientation : Int,
@@ -71,12 +75,11 @@ class RecipesAdapter (
             binding.title.text = recipe.title
             binding.servings.text = servingsTxt
             binding.time.text = time
-
-            val url = "https://spoonacular.com/recipeImages/${recipe.image}"
+            binding.summary.text = HtmlCompat.fromHtml(recipe.summary.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
 
             Glide
                 .with(context)
-                .load(url)
+                .load(recipe.image)
                 .centerCrop()
                 .dontAnimate()
                 .placeholder(R.drawable.recipe_holder)

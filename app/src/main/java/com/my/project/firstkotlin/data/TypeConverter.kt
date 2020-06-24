@@ -13,7 +13,8 @@ object TypeConverter {
             recipe.timeToReady,
             recipe.servings,
             recipe.sourceUrl,
-            recipe.title
+            recipe.title,
+            recipe.summary
         )
     }
 
@@ -24,7 +25,8 @@ object TypeConverter {
             recipe.servings,
             recipe.image,
             recipe.readyInMinutes,
-            recipe.sourceUrl
+            recipe.sourceUrl,
+            recipe.summary
         )
     }
 
@@ -35,7 +37,8 @@ object TypeConverter {
             recipe.servings,
             recipe.image,
             recipe.readyInMinutes,
-            recipe.sourceUrl
+            recipe.sourceUrl,
+            recipe.summary
         )
     }
 
