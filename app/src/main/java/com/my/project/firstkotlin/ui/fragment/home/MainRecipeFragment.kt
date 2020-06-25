@@ -1,7 +1,8 @@
-package com.my.project.firstkotlin.ui.fragment
+package com.my.project.firstkotlin.ui.fragment.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -15,17 +16,14 @@ import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.databinding.FragmentMainRecipesBinding
 import com.my.project.firstkotlin.ui.adapter.RecipesAdapter
 import com.my.project.firstkotlin.ui.adapter.TypeModelAdapter
-import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.ui.util.Constant
 import com.my.project.firstkotlin.ui.util.LoadMoreScrollListener
-import com.my.project.firstkotlin.ui.util.RecipeNavigator
-import com.my.project.firstkotlin.viewmodel.MainRecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainRecipeFragment :
-    BaseFragment(R.layout.fragment_main_recipes),
-    RecipeNavigator
+    Fragment(R.layout.fragment_main_recipes),
+    RecipesAdapter.RecipeNavigator
 {
 
     private lateinit var binding : FragmentMainRecipesBinding
@@ -106,12 +104,18 @@ class MainRecipeFragment :
     }
 
     override fun onRecipeClick(recipe: Recipe) {
-        val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(recipe.id)
+        val action =
+            MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(
+                recipe.id
+            )
         findNavController().navigate(action)
     }
 
     private fun openSearch(type : String? = null) {
-        val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToSearchRecipeFragment(type)
+        val action =
+            MainRecipeFragmentDirections.actionMainRecipeFragmentToSearchRecipeFragment(
+                type
+            )
         findNavController().navigate(action)
     }
 

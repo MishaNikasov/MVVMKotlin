@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    tools:context=".ui.fragment.MainRecipeFragment"
+    tools:context=".ui.fragment.home.MainRecipeFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -8,7 +8,7 @@
     <data>
         <variable
             name="recipeViewModel"
-            type="com.my.project.firstkotlin.viewmodel.MainRecipesViewModel" />
+            type="com.my.project.firstkotlin.ui.fragment.home.MainRecipesViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

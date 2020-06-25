@@ -1,4 +1,4 @@
-package com.my.project.firstkotlin.viewmodel
+package com.my.project.firstkotlin.ui.fragment.favorites
 
 import androidx.databinding.Observable
 import androidx.hilt.lifecycle.ViewModelInject

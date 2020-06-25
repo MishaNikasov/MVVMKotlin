@@ -1,4 +1,4 @@
-package com.my.project.firstkotlin.viewmodel
+package com.my.project.firstkotlin.ui.fragment.home
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData

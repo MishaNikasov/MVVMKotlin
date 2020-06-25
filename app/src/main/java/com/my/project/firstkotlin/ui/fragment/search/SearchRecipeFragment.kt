@@ -1,10 +1,11 @@
-package com.my.project.firstkotlin.ui.fragment
+package com.my.project.firstkotlin.ui.fragment.search
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -12,22 +13,23 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.my.project.firstkotlin.R
+import com.my.project.firstkotlin.data.local.uimodel.TypeModel
 import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.databinding.FragmentSearchRecipeBinding
+import com.my.project.firstkotlin.ui.adapter.FilterAdapter
 import com.my.project.firstkotlin.ui.adapter.RecipesAdapter
-import com.my.project.firstkotlin.ui.base.BaseFragment
 import com.my.project.firstkotlin.ui.util.Constant
 import com.my.project.firstkotlin.ui.util.LoadMoreScrollListener
-import com.my.project.firstkotlin.ui.util.RecipeNavigator
-import com.my.project.firstkotlin.viewmodel.SearchRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
-class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), RecipeNavigator{
+class SearchRecipeFragment : Fragment(R.layout.fragment_search_recipe),
+    RecipesAdapter.RecipeNavigator {
 
     private lateinit var binding: FragmentSearchRecipeBinding
     private val searchRecipeViewModel: SearchRecipeViewModel by viewModels()
@@ -63,6 +65,7 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
 
         requestSearch()
         setUpSearchList()
+        setUpFilterList()
 
         binding.searchText.doAfterTextChanged {
             it?.let {
@@ -116,7 +119,6 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
             }
         }
 
-
         val linearLayoutManager = LinearLayoutManager(context)
         loadMoreListener = LoadMoreScrollListener(linearLayoutManager, loadListener)
 
@@ -152,6 +154,22 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
         })
     }
 
+    private fun setUpFilterList() {
+
+        val closeListener = object : FilterAdapter.CloseListener{
+            override fun close(position: Int, item: TypeModel) {
+                Timber.d(position.toString())
+            }
+        }
+
+        val filterAdapter = FilterAdapter(closeListener)
+        filterAdapter.submitFiltersList(TypeModel.getTypeRecipe())
+
+        with (binding.filterRecycler) {
+            adapter = filterAdapter
+        }
+    }
+
     private fun stopLoading() {
         binding.loadingScreen.visibility = View.GONE
     }
@@ -161,7 +179,10 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
     }
 
     override fun onRecipeClick(recipe: Recipe) {
-        val action = SearchRecipeFragmentDirections.actionSearchRecipeFragmentToRecipeInfoFragment(recipe.id)
+        val action =
+            SearchRecipeFragmentDirections.actionSearchRecipeFragmentToRecipeInfoFragment(
+                recipe.id
+            )
         Navigation.findNavController(binding.root).navigate(action)
     }
 }

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="recipeInfoViewModel"
-            type="com.my.project.firstkotlin.viewmodel.RecipeInfoViewModel" />
+            type="com.my.project.firstkotlin.ui.fragment.info.RecipeInfoViewModel" />
         <variable
             name="recipeInfo"
             type="com.my.project.firstkotlin.data.remote.data.response.RecipeInfo" />

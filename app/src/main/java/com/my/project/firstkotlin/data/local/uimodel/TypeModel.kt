@@ -4,8 +4,8 @@ import com.my.project.firstkotlin.R
 
 data class TypeModel (
     val title : String,
-    val image : Int,
-    val bgColor : Int,
+    val image : Int? = null,
+    val bgColor : Int? = null,
     val value : String
 ) {
     companion object {

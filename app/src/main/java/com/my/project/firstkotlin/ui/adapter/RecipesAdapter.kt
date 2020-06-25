@@ -1,8 +1,6 @@
 package com.my.project.firstkotlin.ui.adapter
 
 import android.content.Context
-import android.text.util.Linkify
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -14,14 +12,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.my.project.firstkotlin.R
-import com.my.project.firstkotlin.data.remote.data.response.Ingredient
 import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.databinding.ItemHorizontalRecipeBinding
-import com.my.project.firstkotlin.databinding.ItemProgressBinding
 import com.my.project.firstkotlin.databinding.ItemVerticalRecipeBinding
 import com.my.project.firstkotlin.ui.util.Constant
-import com.my.project.firstkotlin.ui.util.RecipeNavigator
-import timber.log.Timber
 
 class RecipesAdapter (
     private val orientation : Int,
@@ -127,5 +121,9 @@ class RecipesAdapter (
 
     fun submitRecipesList (recipeModelList: List<Recipe>) {
         differ.submitList(recipeModelList)
+    }
+
+    interface RecipeNavigator {
+        fun onRecipeClick (recipe : Recipe)
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout tools:context=".ui.fragment.SavedRecipeFragment"
+<layout tools:context=".ui.fragment.favorites.SavedRecipeFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -7,7 +7,7 @@
     <data>
         <variable
             name="savedRecipeViewModel"
-            type="com.my.project.firstkotlin.viewmodel.SavedRecipeViewModel" />
+            type="com.my.project.firstkotlin.ui.fragment.favorites.SavedRecipeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

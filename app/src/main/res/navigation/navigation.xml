@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainRecipeFragment"
-        android:name="com.my.project.firstkotlin.ui.fragment.MainRecipeFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.home.MainRecipeFragment"
         android:label="fragment_main_recipes"
         tools:layout="@layout/fragment_main_recipes" >
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/savedRecipesFragment"
-        android:name="com.my.project.firstkotlin.ui.fragment.SavedRecipeFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.favorites.SavedRecipeFragment"
         android:label="fragment_new_recipe"
         tools:layout="@layout/fragment_saved_recipe" >
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/searchRecipeFragment"
-        android:name="com.my.project.firstkotlin.ui.fragment.SearchRecipeFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.search.SearchRecipeFragment"
         android:label="SearchRecipeFragment" >
         <action
             android:id="@+id/action_searchRecipeFragment_to_recipeInfoFragment"
@@ -45,7 +45,7 @@
 
     <fragment
         android:id="@+id/recipeInfoFragment"
-        android:name="com.my.project.firstkotlin.ui.fragment.RecipeInfoFragment"
+        android:name="com.my.project.firstkotlin.ui.fragment.info.RecipeInfoFragment"
         android:label="RecipeInfoFragment" >
         <argument
             android:name="recipe_id"

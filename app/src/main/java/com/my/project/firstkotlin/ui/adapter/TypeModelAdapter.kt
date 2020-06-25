@@ -45,8 +45,8 @@ class TypeModelAdapter(
                 interaction?.onItemSelected(adapterPosition, item)
             }
             itemView.text.text = item.title
-            itemView.image.setImageDrawable(ContextCompat.getDrawable(itemView.context, item.image))
-            itemView.bg.setColorFilter(ContextCompat.getColor(itemView.context, item.bgColor));
+            itemView.image.setImageDrawable(ContextCompat.getDrawable(itemView.context, item.image!!))
+            itemView.bg.setColorFilter(ContextCompat.getColor(itemView.context, item.bgColor!!))
         }
     }
 

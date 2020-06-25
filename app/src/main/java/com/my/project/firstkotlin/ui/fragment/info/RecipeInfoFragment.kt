@@ -1,13 +1,10 @@
-package com.my.project.firstkotlin.ui.fragment
+package com.my.project.firstkotlin.ui.fragment.info
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.my.project.firstkotlin.R
@@ -17,12 +14,10 @@ import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.databinding.FragmentRecipeInfoBinding
 import com.my.project.firstkotlin.ui.adapter.IngredientsAdapter
 import com.my.project.firstkotlin.ui.adapter.InstructionAdapter
-import com.my.project.firstkotlin.ui.base.BaseFragment
-import com.my.project.firstkotlin.viewmodel.RecipeInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecipeInfoFragment : BaseFragment(R.layout.fragment_recipe_info) {
+class RecipeInfoFragment : Fragment(R.layout.fragment_recipe_info) {
 
     private lateinit var binding : FragmentRecipeInfoBinding
     private val recipeInfoViewModel: RecipeInfoViewModel by viewModels()

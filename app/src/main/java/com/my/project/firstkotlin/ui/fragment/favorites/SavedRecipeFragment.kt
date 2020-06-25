@@ -1,4 +1,4 @@
-package com.my.project.firstkotlin.ui.fragment
+package com.my.project.firstkotlin.ui.fragment.favorites
 
 import android.os.Bundle
 import android.view.View
@@ -12,13 +12,12 @@ import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.databinding.FragmentSavedRecipeBinding
 import com.my.project.firstkotlin.ui.adapter.RecipesAdapter
 import com.my.project.firstkotlin.ui.util.Constant
-import com.my.project.firstkotlin.ui.util.RecipeNavigator
-import com.my.project.firstkotlin.viewmodel.SavedRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class SavedRecipeFragment : Fragment(R.layout.fragment_saved_recipe), RecipeNavigator {
+class SavedRecipeFragment : Fragment(R.layout.fragment_saved_recipe),
+    RecipesAdapter.RecipeNavigator {
 
     private lateinit var binding: FragmentSavedRecipeBinding
     private val savedRecipeViewModel: SavedRecipeViewModel by viewModels()
@@ -51,7 +50,10 @@ class SavedRecipeFragment : Fragment(R.layout.fragment_saved_recipe), RecipeNavi
     }
 
     override fun onRecipeClick(recipe: Recipe) {
-        val action = SavedRecipeFragmentDirections.actionSavedRecipesFragmentToRecipeInfoFragment(recipe.id)
+        val action =
+            SavedRecipeFragmentDirections.actionSavedRecipesFragmentToRecipeInfoFragment(
+                recipe.id
+            )
         findNavController().navigate(action)
     }
 

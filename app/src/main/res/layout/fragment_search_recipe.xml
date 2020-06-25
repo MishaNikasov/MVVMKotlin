@@ -6,7 +6,7 @@
     <data>
         <variable
             name="searchRecipeViewModel"
-            type="com.my.project.firstkotlin.viewmodel.SearchRecipeViewModel" />
+            type="com.my.project.firstkotlin.ui.fragment.search.SearchRecipeViewModel" />
     </data>
 
     <LinearLayout
@@ -14,66 +14,77 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.SearchRecipeFragment">
+        tools:context=".ui.fragment.search.SearchRecipeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_margin="@dimen/big_margin"
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:layout_margin="@dimen/big_margin"
+            app:layoutDescription="@xml/fragment_search_recipe_xml_constraintlayout2_scene">
 
             <ImageView
+                android:id="@+id/bg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/basic_margin"
+                android:src="@drawable/search_rounded_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/filter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/ripple_bg"
-                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/small_padding"
+                android:src="@drawable/ic_filter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_gravity="center"
-                android:padding="@dimen/small_padding"
-                android:id="@+id/filter"
-                android:layout_marginStart="@dimen/average_margin"
-                android:src="@drawable/ic_filter"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/back_arrow"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/search_btn"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="@dimen/basic_margin"
-                android:background="@drawable/search_rounded_bg"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toStartOf="@+id/filter"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/average_margin"
+                android:background="@drawable/ripple_bg"
+                android:padding="@dimen/small_padding"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:background="@drawable/ripple_bg"
-                    android:id="@+id/back_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/average_margin"
-                    android:padding="@dimen/small_padding"
-                    android:src="@drawable/ic_arrow_back"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_marginStart="@dimen/basic_margin"
-                    android:id="@+id/search_text"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:gravity="start|center"
-                    android:hint="@string/search"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/text_gray"
-                    android:textSize="@dimen/text_normal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/back_arrow" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/search_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/basic_margin"
+                android:layout_marginEnd="@dimen/basic_margin"
+                android:background="@android:color/transparent"
+                android:gravity="start|center"
+                android:hint="@string/search"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_gray"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/filter"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/back_arrow" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filter_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_filter" />
 
         <RelativeLayout
             android:background="@color/white"
