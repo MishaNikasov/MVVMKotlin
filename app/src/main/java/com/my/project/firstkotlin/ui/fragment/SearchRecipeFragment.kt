@@ -50,6 +50,9 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
         initUi()
     }
 
+    //todo:popup filter view
+    //todo:toolbar in main
+
     private fun initUi () {
 
         args.type?.let {
@@ -67,7 +70,7 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
             }
         }
 
-        binding.close.setOnClickListener {
+        binding.backArrow.setOnClickListener {
             requireActivity().onBackPressed()
         }
     }

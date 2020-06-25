@@ -14,7 +14,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -23,37 +23,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                app:layout_scrollFlags="enterAlways|scroll"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_scrollFlags="scroll|enterAlways"
                 android:id="@+id/search_btn"
+                android:layout_margin="@dimen/big_margin"
+                android:orientation="horizontal"
+                android:background="@drawable/search_rounded_bg"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="@dimen/big_margin"
-                android:layout_marginTop="@dimen/big_margin"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/search_rounded_bg">
+                android:layout_height="50dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:padding="@dimen/small_padding"
+                    android:id="@+id/icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="@dimen/average_margin"
-                    android:layout_marginTop="@dimen/average_margin"
-                    android:layout_marginEnd="@dimen/average_margin"
-                    android:layout_marginBottom="@dimen/average_margin"
-                    android:src="@drawable/ic_search" />
+                    android:src="@drawable/ic_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <com.my.project.firstkotlin.common.AppTextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/average_margin"
+                    android:layout_marginStart="@dimen/basic_margin"
                     android:background="@android:color/transparent"
                     android:gravity="start|center"
-                    android:text="@string/search"
-                    android:textColor="@color/text_gray"
-                    android:textSize="@dimen/text_normal" />
+                    android:hint="@string/search"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_gray"
+                    android:textSize="@dimen/text_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
