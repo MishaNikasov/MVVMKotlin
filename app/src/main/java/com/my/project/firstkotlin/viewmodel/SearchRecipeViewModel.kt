@@ -18,16 +18,21 @@ class SearchRecipeViewModel @ViewModelInject constructor (
     val searchRecipesList : MutableLiveData<Resource<RecipeResponse>> = MutableLiveData()
     private var searchRecipesResponse : RecipeResponse? = null
 
-    fun searchRecipes (searchRecipes : String) = viewModelScope.launch {
+    //filter
+    var type : String = ""
 
-        searchRecipesList.postValue(Resource.Loading())
-
-        val response =
+    fun searchRecipes (searchRecipes : String = "") = viewModelScope.launch {
 
         if (searchRecipesResponse != null)
-            remoteRecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size)
+            searchRecipesList.postValue(Resource.Loading(false))
         else
-            remoteRecipeRepository.getRecipeResult(searchRecipes)
+            searchRecipesList.postValue(Resource.Loading(true))
+
+        val response =
+            if (searchRecipesResponse != null)
+                remoteRecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size, type)
+            else
+                remoteRecipeRepository.getRecipeResult(searchRecipes, 0, type)
 
         searchRecipesList.postValue(handleSearchRecipeResponse(response))
     }

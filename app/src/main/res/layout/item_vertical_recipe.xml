@@ -32,6 +32,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.my.project.firstkotlin.common.AppTextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

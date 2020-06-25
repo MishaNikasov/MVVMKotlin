@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.TypeAdapter
 
 import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.data.local.uimodel.TypeModel
@@ -80,7 +78,7 @@ class MainRecipeFragment :
             when (it) {
                 is Resource.Success -> {
                     it.data?.let {response ->
-                        adapter.setRecipesList(response.recipes.toList())
+                        adapter.submitRecipesList(response.recipes.toList())
                         loadMoreListener.setLoaded()
                     }
                 }
@@ -100,7 +98,7 @@ class MainRecipeFragment :
         val layoutManager = GridLayoutManager(context, 3)
         val adapter = TypeModelAdapter(recipeListViewModel.getType(), object : TypeModelAdapter.Interaction{
             override fun onItemSelected(position: Int, item: TypeModel) {
-                openSearch()
+                openSearch(item.value)
             }
         })
         binding.typeRecycler.adapter = adapter
@@ -112,8 +110,8 @@ class MainRecipeFragment :
         findNavController().navigate(action)
     }
 
-    private fun openSearch() {
-        val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToSearchRecipeFragment()
+    private fun openSearch(type : String? = null) {
+        val action = MainRecipeFragmentDirections.actionMainRecipeFragmentToSearchRecipeFragment(type)
         findNavController().navigate(action)
     }
 

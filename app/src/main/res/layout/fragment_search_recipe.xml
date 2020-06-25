@@ -21,7 +21,7 @@
             android:orientation="horizontal"
             android:background="@drawable/search_rounded_bg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp">
 
             <ImageView
                 android:layout_marginTop="@dimen/average_margin"
@@ -47,15 +47,15 @@
 
 
             <ImageView
-                android:visibility="gone"
+                android:layout_gravity="center"
+                android:padding="@dimen/small_padding"
+                android:background="@drawable/ripple_bg"
                 android:id="@+id/close"
-                android:layout_marginTop="@dimen/average_margin"
                 android:layout_marginStart="@dimen/average_margin"
-                android:layout_marginBottom="@dimen/average_margin"
                 android:layout_marginEnd="@dimen/average_margin"
                 android:src="@drawable/ic_close"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

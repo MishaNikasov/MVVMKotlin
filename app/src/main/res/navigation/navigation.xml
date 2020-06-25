@@ -36,6 +36,11 @@
         <action
             android:id="@+id/action_searchRecipeFragment_to_recipeInfoFragment"
             app:destination="@id/recipeInfoFragment" />
+        <argument
+            android:name="type"
+            app:argType="string"
+            android:defaultValue="null"
+            app:nullable="true" />
     </fragment>
 
     <fragment

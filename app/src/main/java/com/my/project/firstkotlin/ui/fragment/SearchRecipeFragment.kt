@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.my.project.firstkotlin.R
 import com.my.project.firstkotlin.data.remote.data.response.Recipe
@@ -31,9 +32,12 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
     private lateinit var binding: FragmentSearchRecipeBinding
     private val searchRecipeViewModel: SearchRecipeViewModel by viewModels()
 
-    private lateinit var adapter : RecipesAdapter
+    private lateinit var recipeAdapter : RecipesAdapter
 
     private var searchJob : Job? = null
+    private var isRequestFocus = true
+
+    private val args : SearchRecipeFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +51,12 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
     }
 
     private fun initUi () {
+
+        args.type?.let {
+            searchRecipeViewModel.type = args.type!!
+            search()
+            isRequestFocus = false
+        }
 
         requestSearch()
         setUpSearchList()
@@ -62,25 +72,32 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
         }
     }
 
-    private fun search(txt: String) {
+    override fun onPause() {
+        super.onPause()
+        isRequestFocus = false
+    }
+
+    private fun search(txt: String = "") {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             delay(Constant.SEARCH_DELAY)
             if (txt.isNotEmpty()) {
                 searchRecipeViewModel.cleanCurrentList()
-                binding.close.visibility = View.VISIBLE
                 searchRecipeViewModel.searchRecipes(txt)
-            } else
-                binding.close.visibility = View.GONE
+            } else if (args.type != null) {
+                searchRecipeViewModel.searchRecipes()
+            }
         }
     }
 
     private fun requestSearch() {
-        binding.searchText.isFocusableInTouchMode = true;
-        binding.searchText.requestFocus()
+        if (isRequestFocus) {
+            binding.searchText.isFocusableInTouchMode = true;
+            binding.searchText.requestFocus()
 
-        val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.showSoftInput(binding.searchText, InputMethodManager.SHOW_IMPLICIT)
+            val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.showSoftInput(binding.searchText, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 
     //todo: add categories
@@ -96,20 +113,24 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
             }
         }
 
-        val layoutManager = LinearLayoutManager(context)
-        binding.recipesRecycler.layoutManager = layoutManager
-        loadMoreListener = LoadMoreScrollListener(layoutManager, loadListener)
-        binding.recipesRecycler.addOnScrollListener(loadMoreListener)
 
-        adapter = RecipesAdapter(Constant.ORIENTATION_VERTICAL, this)
-        binding.recipesRecycler.adapter = adapter
+        val linearLayoutManager = LinearLayoutManager(context)
+        loadMoreListener = LoadMoreScrollListener(linearLayoutManager, loadListener)
+
+        recipeAdapter = RecipesAdapter(Constant.ORIENTATION_VERTICAL, this)
+
+        with(binding.recipesRecycler) {
+            adapter = recipeAdapter
+            layoutManager = linearLayoutManager
+            addOnScrollListener(loadMoreListener)
+        }
 
         searchRecipeViewModel.searchRecipesList.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     it.data?.let {response ->
-                        adapter.setRecipesList(response.recipes.toList())
                         stopLoading()
+                        recipeAdapter.submitRecipesList(response.recipes.toList())
                         loadMoreListener.setLoaded()
                     }
                 }
@@ -120,7 +141,9 @@ class SearchRecipeFragment : BaseFragment(R.layout.fragment_search_recipe), Reci
                 }
 
                 is Resource.Loading -> {
-                    startLoading()
+                    if (it.loading) {
+                        startLoading()
+                    }
                 }
             }
         })

@@ -9,7 +9,7 @@
     <color name="white">#fff</color>
     <color name="white_transparent">#90FFFFFF</color>
     <color name="light_gray_bg">#F3F3F3</color>
-    <color name="light_gray">#EFEFEF</color>
+    <color name="light_gray">#F1F1F1</color>
     <color name="dark_gray">#BDBDBD</color>
 
     <color name="receipt_item_bg">#F1F1F1</color>

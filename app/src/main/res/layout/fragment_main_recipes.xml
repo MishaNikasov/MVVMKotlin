@@ -27,7 +27,7 @@
                 app:layout_scrollFlags="enterAlways|scroll"
                 android:id="@+id/search_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="@dimen/big_margin"
                 android:layout_marginTop="@dimen/big_margin"
                 android:layout_marginEnd="16dp"

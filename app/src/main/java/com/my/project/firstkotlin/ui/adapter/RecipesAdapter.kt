@@ -5,6 +5,7 @@ import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -69,6 +70,11 @@ class RecipesAdapter (
     inner class VerticalRecipeViewHolder (private val context: Context, private val binding: ItemVerticalRecipeBinding) : BaseViewHolder(binding) {
         fun bind (recipe : Recipe) {
 
+            binding.root.animation = AnimationUtils.loadAnimation(
+                binding.root.context,
+                R.anim.item_add
+            )
+
             val servingsTxt = "${recipe.servings} servings"
             val time = "${recipe.readyInMinutes} min"
 
@@ -119,7 +125,7 @@ class RecipesAdapter (
 
     override fun getItemCount() : Int = differ.currentList.size
 
-    fun setRecipesList (recipeModelList: List<Recipe>) {
+    fun submitRecipesList (recipeModelList: List<Recipe>) {
         differ.submitList(recipeModelList)
     }
 }

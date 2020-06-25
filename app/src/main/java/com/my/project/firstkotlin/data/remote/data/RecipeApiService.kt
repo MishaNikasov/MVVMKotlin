@@ -12,10 +12,11 @@ interface RecipeApiService {
 
     @GET("recipes/complexSearch")
     suspend fun searchRecipes(
-        @Query("query") receipt : String,
+        @Query("query") receipt : String = "",
         @Query("offset") offset : Int = 0,
-        @Query("number") number : Int = Constant.ITEMS_COUNT,
-        @Query("addRecipeInformation") addRecipeInformation : Boolean = true
+        @Query("type") type : String? = null,
+        @Query("addRecipeInformation") addRecipeInformation : Boolean = true,
+        @Query("number") number : Int = Constant.ITEMS_COUNT
     ) : Response<RecipeResponse>
 
     @GET("recipes/search")

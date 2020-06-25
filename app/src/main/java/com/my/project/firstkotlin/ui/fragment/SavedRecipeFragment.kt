@@ -43,7 +43,7 @@ class SavedRecipeFragment : Fragment(R.layout.fragment_saved_recipe), RecipeNavi
             for (recipeModel in recipesModelList) {
                 recipesList.add(TypeConverter.localToRemoteRecipe(recipeModel))
                 Timber.d(savedRecipeViewModel.getAllSavedRecipes().value?.size.toString())
-                recipeAdapter.setRecipesList(recipesList)
+                recipeAdapter.submitRecipesList(recipesList)
             }
         })
 
