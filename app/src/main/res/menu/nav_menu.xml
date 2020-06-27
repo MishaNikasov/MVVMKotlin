@@ -6,6 +6,10 @@
         android:icon="@drawable/ic_home"
         android:title="@string/home" />
     <item
+        android:id="@+id/searchRecipeFragment"
+        android:icon="@drawable/ic_search"
+        android:title="@string/home" />
+    <item
         android:id="@+id/savedRecipesFragment"
         android:icon="@drawable/ic_favorite_full"
         android:title="@string/favorites" />

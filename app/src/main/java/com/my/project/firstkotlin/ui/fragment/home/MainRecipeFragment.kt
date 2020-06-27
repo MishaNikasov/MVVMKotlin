@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.my.project.firstkotlin.R
-import com.my.project.firstkotlin.data.local.uimodel.TypeModel
+import com.my.project.firstkotlin.data.local.TypeModel
 import com.my.project.firstkotlin.data.remote.data.response.Recipe
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.databinding.FragmentMainRecipesBinding
@@ -22,8 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainRecipeFragment :
-    Fragment(R.layout.fragment_main_recipes),
-    RecipesAdapter.RecipeNavigator
+    Fragment(R.layout.fragment_main_recipes)
 {
 
     private lateinit var binding : FragmentMainRecipesBinding
@@ -41,6 +40,7 @@ class MainRecipeFragment :
     }
 
     private fun initUi() {
+
         setUpPopularList()
         recipeListViewModel.getPopularRecipes()
 
@@ -62,6 +62,16 @@ class MainRecipeFragment :
             }
         }
 
+        val recipeClick = object : RecipesAdapter.RecipeNavigator {
+            override fun onRecipeClick(recipe: Recipe) {
+                val action =
+                    MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(
+                        recipe.id
+                    )
+                findNavController().navigate(action)
+            }
+        }
+
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         binding.popularRecipesRecycler.layoutManager = layoutManager
@@ -69,7 +79,7 @@ class MainRecipeFragment :
         loadMoreListener = LoadMoreScrollListener(layoutManager, loadListener)
         binding.popularRecipesRecycler.addOnScrollListener(loadMoreListener)
 
-        val adapter = RecipesAdapter(Constant.ORIENTATION_HORIZONTAL, this)
+        val adapter = RecipesAdapter(Constant.ORIENTATION_HORIZONTAL, recipeClick)
         binding.popularRecipesRecycler.adapter = adapter
 
         recipeListViewModel.popularRecipesList.observe(viewLifecycleOwner, Observer {
@@ -101,14 +111,6 @@ class MainRecipeFragment :
         })
         binding.typeRecycler.adapter = adapter
         binding.typeRecycler.layoutManager = layoutManager
-    }
-
-    override fun onRecipeClick(recipe: Recipe) {
-        val action =
-            MainRecipeFragmentDirections.actionMainRecipeFragmentToRecipeInfoFragment(
-                recipe.id
-            )
-        findNavController().navigate(action)
     }
 
     private fun openSearch(type : String? = null) {

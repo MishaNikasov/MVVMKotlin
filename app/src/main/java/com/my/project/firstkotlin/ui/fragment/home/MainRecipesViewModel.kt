@@ -4,7 +4,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.my.project.firstkotlin.data.local.uimodel.TypeModel
+import com.my.project.firstkotlin.data.local.TypeModel
+import com.my.project.firstkotlin.data.local.repository.FilterRepo
 import com.my.project.firstkotlin.data.remote.data.repository.RemoteRecipeRepository
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class MainRecipesViewModel @ViewModelInject constructor (
+    private val filterRepo : FilterRepo,
     private val remoteRecipeRepository : RemoteRecipeRepository
 ) : ViewModel() {
 
@@ -51,6 +53,6 @@ class MainRecipesViewModel @ViewModelInject constructor (
 
     //local
     fun getType() : List<TypeModel> {
-        return TypeModel.getTypeRecipe()
+        return filterRepo.getTypeList()
     }
 }

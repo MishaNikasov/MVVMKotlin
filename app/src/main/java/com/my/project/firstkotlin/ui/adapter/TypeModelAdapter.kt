@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.my.project.firstkotlin.R
-import com.my.project.firstkotlin.data.local.uimodel.TypeModel
+import com.my.project.firstkotlin.data.local.TypeModel
 import kotlinx.android.synthetic.main.item_type_model.view.*
 
 class TypeModelAdapter(

@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.my.project.firstkotlin.data.TypeConverter
-import com.my.project.firstkotlin.data.local.repository.LocalRecipeRepo
-import com.my.project.firstkotlin.data.local.room.model.RecipeModel
+import com.my.project.firstkotlin.data.database.repository.DatabaseRecipeRepo
+import com.my.project.firstkotlin.data.database.room.model.RecipeModel
 import com.my.project.firstkotlin.data.remote.data.repository.RemoteRecipeRepository
 import com.my.project.firstkotlin.data.remote.data.response.RecipeInfo
 import com.my.project.firstkotlin.data.remote.util.Resource
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class RecipeInfoViewModel @ViewModelInject constructor (
-    private val localRecipeRepo : LocalRecipeRepo,
+    private val databaseRecipeRepo : DatabaseRecipeRepo,
     private val remoteRecipeRepository : RemoteRecipeRepository
 ) : ViewModel(), Observable {
 
@@ -58,19 +58,19 @@ class RecipeInfoViewModel @ViewModelInject constructor (
 
     private fun addRecipeToDB(recipe: RecipeModel) {
         viewModelScope.launch {
-            localRecipeRepo.insert(recipe)
+            databaseRecipeRepo.insert(recipe)
         }
     }
 
     private fun deleteRecipeFromDB(recipe: RecipeModel) {
         viewModelScope.launch {
-            localRecipeRepo.deleteById(recipe.remoteId)
+            databaseRecipeRepo.deleteById(recipe.remoteId)
         }
     }
 
     fun getLocalRecipe (id : Int) {
         viewModelScope.launch {
-            localRecipe.postValue(localRecipeRepo.getById(id))
+            localRecipe.postValue(databaseRecipeRepo.getById(id))
         }
     }
 

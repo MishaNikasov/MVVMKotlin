@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import com.my.project.firstkotlin.R
-import com.my.project.firstkotlin.data.local.uimodel.TypeModel
-import com.my.project.firstkotlin.data.remote.data.response.Ingredient
+import com.my.project.firstkotlin.data.local.TypeModel
+import kotlinx.android.synthetic.main.item_filter.view.*
 
 class FilterAdapter(
-    private val closeListener: CloseListener? = null
+    private val listener: Listener? = null
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
@@ -34,7 +34,7 @@ class FilterAdapter(
                 parent,
                 false
             ),
-            closeListener
+            listener
         )
     }
 
@@ -50,20 +50,21 @@ class FilterAdapter(
         return differ.currentList.size
     }
 
-    class TypeViewHolder(itemView: View, private val closeListener: CloseListener?) : RecyclerView.ViewHolder(itemView) {
+    class TypeViewHolder(itemView: View, private val listener: Listener?) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: TypeModel) {
             itemView.setOnClickListener {
-                closeListener?.close(adapterPosition, item)
+                listener?.interact(adapterPosition, item)
             }
+            itemView.text.text = item.title
         }
     }
 
-    interface CloseListener {
-        fun close(position: Int, item: TypeModel)
+    interface Listener {
+        fun interact(position: Int, item: TypeModel)
     }
 
     fun submitFiltersList (filters : List<TypeModel>) {
-        differ.submitList(filters)
+        differ.submitList(filters.toList())
     }
 }
 

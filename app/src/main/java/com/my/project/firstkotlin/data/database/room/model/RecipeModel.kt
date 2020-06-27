@@ -1,4 +1,4 @@
-package com.my.project.firstkotlin.data.local.room.model
+package com.my.project.firstkotlin.data.database.room.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

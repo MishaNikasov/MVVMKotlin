@@ -11,12 +11,14 @@
 
     <com.my.project.firstkotlin.common.AppTextView
         android:textColor="@color/white"
+        android:layout_marginStart="@dimen/basic_margin"
         android:text="Soup"
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <ImageView
+        android:layout_marginEnd="@dimen/basic_margin"
         android:id="@+id/del"
         android:layout_marginStart="@dimen/basic_margin"
         android:tint="@color/white"

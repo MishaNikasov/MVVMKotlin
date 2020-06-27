@@ -47,13 +47,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/back_arrow"
+                android:id="@+id/search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/average_margin"
                 android:background="@drawable/ripple_bg"
                 android:padding="@dimen/small_padding"
-                android:src="@drawable/ic_arrow_back"
+                android:src="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

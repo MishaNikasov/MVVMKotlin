@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:visibility="gone"
             app:elevation="0dp"
             android:background="@color/white"
             android:layout_width="match_parent"

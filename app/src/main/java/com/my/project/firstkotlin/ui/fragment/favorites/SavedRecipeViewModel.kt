@@ -4,14 +4,14 @@ import androidx.databinding.Observable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.my.project.firstkotlin.data.local.repository.LocalRecipeRepo
-import com.my.project.firstkotlin.data.local.room.model.RecipeModel
+import com.my.project.firstkotlin.data.database.repository.DatabaseRecipeRepo
+import com.my.project.firstkotlin.data.database.room.model.RecipeModel
 
 class SavedRecipeViewModel @ViewModelInject constructor(
-    private val localRecipeRepo: LocalRecipeRepo
+    private val databaseRecipeRepo: DatabaseRecipeRepo
 ) : ViewModel(), Observable {
 
-    fun getAllSavedRecipes () : LiveData<List<RecipeModel>> = localRecipeRepo.getAllRecipes()
+    fun getAllSavedRecipes () : LiveData<List<RecipeModel>> = databaseRecipeRepo.getAllRecipes()
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
 

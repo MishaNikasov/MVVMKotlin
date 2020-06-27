@@ -4,13 +4,17 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.my.project.firstkotlin.data.local.TypeModel
+import com.my.project.firstkotlin.data.local.repository.FilterRepo
 import com.my.project.firstkotlin.data.remote.data.repository.RemoteRecipeRepository
 import com.my.project.firstkotlin.data.remote.util.Resource
 import com.my.project.firstkotlin.data.remote.data.response.RecipeResponse
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.lang.StringBuilder
 
 class SearchRecipeViewModel @ViewModelInject constructor (
+    private val filterRepo: FilterRepo,
     private val remoteRecipeRepository : RemoteRecipeRepository
 ) : ViewModel() {
 
@@ -18,10 +22,14 @@ class SearchRecipeViewModel @ViewModelInject constructor (
     val searchRecipesList : MutableLiveData<Resource<RecipeResponse>> = MutableLiveData()
     private var searchRecipesResponse : RecipeResponse? = null
 
-    //filter
-    var type : String = ""
+    //top filter
+    val topFilterList : MutableLiveData<List<TypeModel>> = MutableLiveData()
 
-    fun searchRecipes (searchRecipes : String = "") = viewModelScope.launch {
+    private lateinit var currentSearchTxt : String
+
+    fun searchRecipes (searchRecipes : String) = viewModelScope.launch {
+
+        currentSearchTxt = searchRecipes
 
         if (searchRecipesResponse != null)
             searchRecipesList.postValue(Resource.Loading(false))
@@ -30,9 +38,9 @@ class SearchRecipeViewModel @ViewModelInject constructor (
 
         val response =
             if (searchRecipesResponse != null)
-                remoteRecipeRepository.getRecipeResult(searchRecipes, searchRecipesResponse?.recipes!!.size, type)
+                remoteRecipeRepository.getRecipeResult(currentSearchTxt, searchRecipesResponse?.recipes!!.size, convertListToString())
             else
-                remoteRecipeRepository.getRecipeResult(searchRecipes, 0, type)
+                remoteRecipeRepository.getRecipeResult(currentSearchTxt, 0, convertListToString())
 
         searchRecipesList.postValue(handleSearchRecipeResponse(response))
     }
@@ -53,7 +61,39 @@ class SearchRecipeViewModel @ViewModelInject constructor (
         return Resource.Error("Something wrong with search: " + response.message())
     }
 
-    fun cleanCurrentList() {
+    fun cleanCurrentSearchList() {
         searchRecipesResponse = null
+    }
+
+    fun getTypeList() : List<TypeModel> {
+        return filterRepo.getTypeList()
+    }
+
+    fun addType(item: TypeModel) {
+        filterRepo.addToFilterList(item)
+        updateList()
+    }
+
+    fun delType(item : TypeModel) {
+        filterRepo.delFromType(item)
+        updateList()
+    }
+
+    private fun updateList(){
+        topFilterList.postValue(filterRepo.getFilterList())
+    }
+
+    private fun convertListToString() : String{
+        var typeArray = ""
+        topFilterList.value?.let {
+            for (item in topFilterList.value!!) {
+                typeArray = StringBuilder().append(
+                    typeArray,
+                    ",",
+                    item.value
+                ).toString()
+            }
+        }
+        return typeArray
     }
 }

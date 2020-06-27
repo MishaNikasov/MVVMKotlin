@@ -1,9 +1,8 @@
-package com.my.project.firstkotlin.data.local.room.dao
+package com.my.project.firstkotlin.data.database.room.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import com.my.project.firstkotlin.data.local.room.model.RecipeModel
+import com.my.project.firstkotlin.data.database.room.model.RecipeModel
 
 @Dao
 interface RecipeDAO {

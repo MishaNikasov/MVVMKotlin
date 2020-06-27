@@ -10,7 +10,7 @@ class RemoteRecipeRepository @Inject constructor (
     private val recipeApiService: RecipeApiService
 ) {
 
-    suspend fun getRecipeResult(recipes : String = "", offset : Int = 0, type : String = "" ) : Response<RecipeResponse> {
+    suspend fun getRecipeResult(recipes : String = "", offset : Int = 0, type : String? = "" ) : Response<RecipeResponse> {
         return recipeApiService.searchRecipes(recipes, offset, type)
     }
 
